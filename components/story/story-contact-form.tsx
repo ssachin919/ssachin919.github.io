@@ -70,7 +70,7 @@ export function StoryContactForm() {
         <Textarea
           id="message"
           name="message"
-          placeholder="Build with us, learn with us, or simply say hello."
+          placeholder="Build with us, learn with us, or simply say namaste."
           required
           rows={4}
         />

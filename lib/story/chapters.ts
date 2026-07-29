@@ -180,7 +180,7 @@ export const storyChapters: StoryChapter[] = [
     railLabel: "Join",
     eyebrow: "Mission Bhavya Bharat",
     title: "Everyone deserves a glorious life.",
-    body: "If this arc resonates: build with us, learn with us, or simply say hello.",
+    body: "If this arc resonates: build with us, learn with us, or simply say namaste.",
     variant: "close",
     pin: true,
     cvHref: withBase("/cv/sachin-anand.pdf"),

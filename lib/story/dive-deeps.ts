@@ -475,7 +475,7 @@ export const diveDeeps: Record<string, DiveDeep> = {
     title: "Walk with the mission",
     eyebrow: "Connect",
     summary:
-      "Build, learn, or simply say hello. Skills, education, and research are open in the side panel.",
+      "Build, learn, or simply say namaste. Skills, education, and research are open in the side panel.",
     sections: [
       {
         heading: "Ways in",
