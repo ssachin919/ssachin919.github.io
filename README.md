@@ -33,7 +33,7 @@ This app builds as a static site (`output: "export"`). On push to `main`, [`.git
    - `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
    - `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
    - `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
-4. After the workflow succeeds, the site is at `https://<user>.github.io/<repo>/` (or `https://<user>.github.io/` for a `<user>.github.io` repo)
+4. After the workflow succeeds, the site is at `https://ssachin919.github.io/` (user site from the `ssachin919.github.io` repo). Project-style repos still get `https://<user>.github.io/<repo>/`.
 
 Local static preview:
 
@@ -42,7 +42,7 @@ pnpm build
 pnpm preview
 ```
 
-To mimic a project-page base path locally: `BASE_PATH=/your-repo-name pnpm build`.
+For a project-page base path locally: `BASE_PATH=/your-repo-name pnpm build`. The user site build leaves `BASE_PATH` empty.
 
 ## EmailJS setup
 
