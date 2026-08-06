@@ -9,7 +9,7 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 ### hero — Mission
 
 **Title:** Mission Bhavya Bharat  
-**Body:** A life where technology serves the soul, and the nation rises with both.  
+**Body:** Transforming professions, elevating consciousness, and contributing to Bharat’s rise.  
 **Body extra:** Technology · Spirituality · Nation Building  
 **CTA:** Begin the journey
 

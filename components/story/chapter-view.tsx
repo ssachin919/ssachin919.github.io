@@ -97,6 +97,10 @@ function HeroChapter({
   chapter: StoryChapter;
   scrollProgress: number;
 }) {
+  const reduce = useReducedMotion();
+  const avatarSrc =
+    chapter.portraitSrc ?? "/pictures/sachin-avatar-circle.webp";
+
   return (
     <section
       id={chapter.id}
@@ -105,8 +109,8 @@ function HeroChapter({
     >
       <HeroAtmosphere />
       <SceneLayer chapter={chapter} scrollProgress={scrollProgress} />
-      <div className="story-chapter-content relative z-10 mx-auto w-full max-w-4xl px-6 pb-24 pt-28 md:px-10 lg:pl-28">
-        <Stagger>
+      <div className="story-chapter-content relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-24 pt-28 md:flex-row md:items-center md:gap-14 md:px-10 lg:pl-28">
+        <Stagger className="min-w-0 flex-1">
           <StaggerItem>
             <p className="font-mono text-xs tracking-[0.28em] text-mbb-green uppercase">
               Mission
@@ -140,6 +144,22 @@ function HeroChapter({
             <ChapterDiveTriggers chapterId={chapter.id} />
           </StaggerItem>
         </Stagger>
+
+        <motion.div
+          className="relative mx-auto h-40 w-40 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
+          animate={reduce ? undefined : { y: [0, -8, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="absolute inset-0 rounded-full bg-mbb-green/20 blur-2xl" />
+          <Image
+            src={avatarSrc}
+            alt="Sachin Anand"
+            fill
+            priority
+            className="rounded-full object-cover"
+            sizes="(max-width: 768px) 192px, 256px"
+          />
+        </motion.div>
       </div>
     </section>
   );
@@ -206,23 +226,19 @@ function PortraitChapter({
         </div>
         {chapter.portraitSrc ? (
           <motion.div
-            className="relative mx-auto aspect-[3/4] w-48 overflow-hidden md:w-full"
-            animate={
-              reduce
-                ? undefined
-                : { y: [0, -6, 0] }
-            }
+            className="relative mx-auto aspect-square w-44 overflow-hidden rounded-full md:w-56 lg:w-64"
+            animate={reduce ? undefined : { y: [0, -6, 0] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={reduce ? undefined : { scale: 1.02 }}
+            whileHover={reduce ? undefined : { scale: 1.03 }}
           >
+            <div className="absolute inset-0 rounded-full bg-mbb-green/15 blur-xl" />
             <Image
               src={chapter.portraitSrc}
               alt="Sachin Anand"
               fill
-              className="object-cover object-top"
-              sizes="220px"
+              className="rounded-full object-cover"
+              sizes="256px"
             />
-            <div className="pointer-events-none absolute inset-0 ring-1 ring-mbb-green/30" />
           </motion.div>
         ) : null}
       </div>
