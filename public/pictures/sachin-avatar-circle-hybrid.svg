@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Sachin Anand">
-  <defs>
-    <clipPath id="face">
-      <circle cx="256.0" cy="256.0" r="234.0"/>
-    </clipPath>
-  </defs>
-  <circle cx="256.0" cy="256.0" r="248.0" fill="#39B54A"/>
-  <circle cx="256.0" cy="256.0" r="234.0" fill="#000000"/>
-  <image href="sachin-avatar-circle.png" x="22" y="22" width="468" height="468" clip-path="url(#face)" preserveAspectRatio="xMidYMid slice"/>
+  <image href="sachin-avatar-circle.png" width="512" height="512" preserveAspectRatio="xMidYMid meet"/>
 </svg>
