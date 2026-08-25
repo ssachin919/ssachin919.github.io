@@ -125,7 +125,7 @@ def svg_circle_frame(href: str, size: int = 512) -> str:
     return (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" '
-        f'viewBox="0 0 {size} {size}" role="img" aria-label="Sachin Anand">\n'
+        f'viewBox="0 0 {size} {size}" role="img" aria-label="Swami Sachin Anand">\n'
         f'  <image href="{href}" width="{size}" height="{size}" '
         'preserveAspectRatio="xMidYMid meet"/>\n'
         "</svg>\n"

@@ -43,7 +43,7 @@ export function StoryContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 max-w-md space-y-4">
+    <form onSubmit={handleSubmit} className="mt-8 w-full max-w-md space-y-4">
       <div className="space-y-2">
         <Label htmlFor="user_name">Name</Label>
         <Input
@@ -52,6 +52,7 @@ export function StoryContactForm() {
           placeholder="Your name"
           required
           autoComplete="name"
+          className="min-h-11 text-base md:min-h-9 md:text-sm"
         />
       </div>
       <div className="space-y-2">
@@ -63,6 +64,7 @@ export function StoryContactForm() {
           placeholder="you@example.com"
           required
           autoComplete="email"
+          className="min-h-11 text-base md:min-h-9 md:text-sm"
         />
       </div>
       <div className="space-y-2">
@@ -73,9 +75,10 @@ export function StoryContactForm() {
           placeholder="Build with us, learn with us, or simply say namaste."
           required
           rows={4}
+          className="text-base md:text-sm"
         />
       </div>
-      <Button type="submit" disabled={status === "sending"}>
+      <Button type="submit" disabled={status === "sending"} className="min-h-11 w-full sm:w-auto">
         {status === "sending" ? "Sending…" : "Send message"}
       </Button>
       {status === "success" ? (

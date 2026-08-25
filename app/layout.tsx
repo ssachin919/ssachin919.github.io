@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Montserrat, JetBrains_Mono } from "next/font/google";
 
+import { person } from "@/lib/brand";
 import "@/lib/fontawesome";
 import "./globals.css";
 
@@ -19,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: "Mission Bhavya Bharat | Sachin Anand",
+  title: `Mission Bhavya Bharat | ${person.fullName}`,
   description:
     "From IIT Kanpur to Vrindavan — building Humantra and CoinsLive for clarity within and opportunity without. Technology · Spirituality · Nation Building.",
   icons: {
@@ -32,6 +33,13 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#000000",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -42,7 +50,9 @@ export default function RootLayout({
       lang="en"
       className={`dark ${montserrat.variable} ${jetbrainsMono.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col overflow-x-hidden font-sans">
+        {children}
+      </body>
     </html>
   );
 }

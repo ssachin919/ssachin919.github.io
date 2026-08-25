@@ -9,9 +9,12 @@ import { ChapterView } from "@/components/story/chapter-view";
 import { DivePanelProvider } from "@/components/story/dive-panel-context";
 import { DiveSidePanel } from "@/components/story/dive-side-panel";
 import { StorySocialLinks } from "@/components/story/story-social-links";
+import { person } from "@/lib/brand";
 import { storyChapters } from "@/lib/story/chapters";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const MOBILE_MQ = "(max-width: 1023px)";
 
 export function StoryExperience() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -19,6 +22,15 @@ export function StoryExperience() {
   const [sceneProgress, setSceneProgress] = useState<Record<string, number>>(
     {}
   );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(MOBILE_MQ);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const sections = Array.from(
@@ -70,32 +82,46 @@ export function StoryExperience() {
         const content = section.querySelector(".story-chapter-content");
         if (content) {
           gsap.from(content, {
-            y: 36,
+            y: isMobile ? 20 : 36,
             opacity: 0,
-            duration: 0.85,
+            duration: isMobile ? 0.55 : 0.85,
             ease: "power2.out",
             scrollTrigger: {
               trigger: section,
-              start: "top 78%",
+              start: "top 82%",
               toggleActions: "play none none reverse",
             },
           });
         }
       });
 
-      const pinIds = storyChapters
-        .filter((c) => c.pin)
-        .map((c) => c.id);
+      const pinIds = storyChapters.filter((c) => c.pin).map((c) => c.id);
 
       pinIds.forEach((id) => {
         const section = root.querySelector<HTMLElement>(`#${id}`);
         if (!section) return;
 
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        // Skip sticky pins on mobile/tablet — tall pinned sections feel stuck on touch.
+        if (isMobile) {
+          ScrollTrigger.create({
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+            onUpdate: (self) => {
+              setSceneProgress((prev) => ({
+                ...prev,
+                [id]: self.progress,
+              }));
+            },
+          });
+          return;
+        }
+
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end: isMobile ? "+=60%" : "+=90%",
+          end: "+=90%",
           pin: true,
           pinSpacing: true,
           scrub: true,
@@ -120,7 +146,7 @@ export function StoryExperience() {
               scrollTrigger: {
                 trigger: section,
                 start: "top top",
-                end: isMobile ? "+=60%" : "+=90%",
+                end: "+=90%",
                 scrub: true,
               },
             }
@@ -149,11 +175,11 @@ export function StoryExperience() {
     }, root);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <DivePanelProvider>
-      <div ref={rootRef} className="relative bg-black text-white">
+      <div ref={rootRef} className="relative overflow-x-hidden bg-black text-white">
         <ChapterRail activeId={activeId} />
         <main>
           {storyChapters.map((chapter) => (
@@ -164,10 +190,20 @@ export function StoryExperience() {
             />
           ))}
         </main>
-        <footer className="border-t border-white/10 px-6 py-10 lg:pl-28">
-          <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 text-center">
-            <p className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-              Mission Bhavya Bharat · Technology · Spirituality · Nation Building
+        <footer className="border-t border-white/10 px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:pl-28">
+          <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 text-center sm:gap-4">
+            <p className="font-mono text-xs tracking-[0.12em] text-white/80 sm:tracking-[0.16em]">
+              {person.fullName}
+            </p>
+            <p className="max-w-sm font-mono text-[10px] leading-relaxed tracking-[0.12em] text-muted-foreground uppercase sm:max-w-none sm:tracking-[0.2em]">
+              Mission Bhavya Bharat
+              <span className="hidden sm:inline">
+                {" "}
+                · Technology · Spirituality · Nation Building
+              </span>
+            </p>
+            <p className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase sm:hidden">
+              Technology · Spirituality · Nation Building
             </p>
             <StorySocialLinks compact />
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
@@ -18,6 +18,18 @@ function useFineHover() {
   return fine;
 }
 
+function useIsNarrow(query = "(max-width: 639px)") {
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [query]);
+  return narrow;
+}
+
 export function DiveSidePanel() {
   const {
     openId,
@@ -29,6 +41,7 @@ export function DiveSidePanel() {
   const open = Boolean(openId);
   const reduce = useReducedMotion();
   const dive = openId ? diveDeeps[openId] : null;
+  const isSheet = useIsNarrow();
 
   useEffect(() => {
     if (!open) return;
@@ -36,23 +49,36 @@ export function DiveSidePanel() {
       if (e.key === "Escape") closeAll();
     }
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
   }, [open, closeAll]);
+
+  const closed = isSheet ? { y: "100%", x: 0 } : { x: "100%", y: 0 };
+  const opened = { x: 0, y: 0 };
 
   return (
     <>
-      <div
+      <button
+        type="button"
+        aria-label="Close dive panel"
         className={cn(
-          "pointer-events-none fixed inset-0 z-40 bg-black/25 transition-opacity duration-300",
-          open ? "opacity-100" : "opacity-0"
+          "fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 lg:bg-black/25",
+          open
+            ? "pointer-events-auto opacity-100"
+            : "pointer-events-none opacity-0"
         )}
-        aria-hidden
+        onClick={closeAll}
+        tabIndex={open ? 0 : -1}
       />
 
       <motion.aside
-        className="fixed top-0 right-0 z-50 flex h-full w-[min(100%,28rem)] flex-col border-l border-white/10 bg-[#0a0a0a]/95 shadow-2xl backdrop-blur-md sm:max-w-lg"
+        className="fixed inset-x-0 bottom-0 z-50 flex max-h-[min(92dvh,100%)] w-full flex-col rounded-t-2xl border border-white/10 border-b-0 bg-[#0a0a0a]/98 shadow-2xl backdrop-blur-md sm:inset-x-auto sm:top-0 sm:right-0 sm:bottom-auto sm:h-full sm:max-h-none sm:w-[min(100%,28rem)] sm:rounded-none sm:border-t-0 sm:border-r-0 sm:border-b-0 sm:border-l sm:max-w-lg"
         initial={false}
-        animate={{ x: open ? 0 : "100%" }}
+        animate={open ? opened : closed}
         transition={
           reduce
             ? { duration: 0 }
@@ -66,19 +92,26 @@ export function DiveSidePanel() {
         }}
         onMouseLeave={() => setSidebarHovered(false)}
       >
-        <header className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+        <div
+          className="mx-auto mt-2 h-1 w-10 shrink-0 rounded-full bg-white/20 sm:hidden"
+          aria-hidden
+        />
+        <header className="flex items-center justify-between border-b border-white/10 px-4 py-3 sm:px-5 sm:py-4">
           <div>
             <p className="font-mono text-[10px] tracking-[0.18em] text-mbb-green uppercase">
               Dive deeper
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Hover to explore · leave to close
+              <span className="sm:hidden">Tap outside or × to close</span>
+              <span className="hidden sm:inline">
+                Hover to explore · leave to close
+              </span>
             </p>
           </div>
           <motion.button
             type="button"
             onClick={closeAll}
-            className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-white/5 hover:text-white"
+            className="rounded-md p-2.5 text-muted-foreground transition-colors hover:bg-white/5 hover:text-white"
             aria-label="Close panel"
             whileHover={reduce ? undefined : { rotate: 90 }}
             transition={{ type: "spring", stiffness: 400, damping: 20 }}
@@ -87,7 +120,7 @@ export function DiveSidePanel() {
           </motion.button>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-4 py-4">
+        <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <AnimatePresence mode="wait" initial={false}>
             {dive ? (
               <motion.article
@@ -105,7 +138,7 @@ export function DiveSidePanel() {
                 className="rounded-lg border border-white/10 bg-black/60 p-4"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div>
+                  <div className="min-w-0">
                     {dive.eyebrow ? (
                       <p className="font-mono text-[10px] tracking-[0.16em] text-mbb-green uppercase">
                         {dive.eyebrow}
@@ -118,7 +151,7 @@ export function DiveSidePanel() {
                   <button
                     type="button"
                     onClick={closeAll}
-                    className="shrink-0 rounded p-1.5 text-muted-foreground hover:bg-white/5 hover:text-white"
+                    className="shrink-0 rounded p-2 text-muted-foreground hover:bg-white/5 hover:text-white"
                     aria-label={`Close ${dive.title}`}
                   >
                     <X className="h-3.5 w-3.5" />
@@ -180,7 +213,7 @@ export function DiveSidePanel() {
                             key={link.href}
                             type="button"
                             onClick={() => openDive(nestedId)}
-                            className="font-mono text-[11px] tracking-wide text-mbb-green underline-offset-4 hover:underline"
+                            className="min-h-10 font-mono text-xs tracking-wide text-mbb-green underline-offset-4 hover:underline"
                           >
                             {link.label} →
                           </button>
@@ -192,7 +225,7 @@ export function DiveSidePanel() {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="font-mono text-[11px] tracking-wide text-mbb-green underline-offset-4 hover:underline"
+                          className="inline-flex min-h-10 items-center font-mono text-xs tracking-wide text-mbb-green underline-offset-4 hover:underline"
                         >
                           {link.label} →
                         </a>
@@ -246,9 +279,7 @@ export function DiveTrigger({
 
   function onLeave() {
     clearOpenDelay();
-    // Only auto-close from pointer hover paths (desktop)
     if (fineHover.current) {
-      // Grace period to reach the right sidebar
       scheduleClose(420);
     }
   }
@@ -265,7 +296,7 @@ export function DiveTrigger({
       onFocus={onEnter}
       onBlur={onLeave}
       className={cn(
-        "group inline-flex items-center gap-2 border border-mbb-green/30 bg-mbb-green/5 px-3 py-1.5 font-mono text-[11px] tracking-[0.14em] text-mbb-green uppercase transition-colors hover:border-mbb-green/60 hover:bg-mbb-green/10",
+        "group inline-flex min-h-10 items-center gap-2 border border-mbb-green/30 bg-mbb-green/5 px-3 py-2 font-mono text-[11px] tracking-[0.12em] text-mbb-green uppercase transition-colors hover:border-mbb-green/60 hover:bg-mbb-green/10 sm:min-h-0 sm:py-1.5 sm:tracking-[0.14em]",
         active && "border-mbb-green/70 bg-mbb-green/15",
         className
       )}

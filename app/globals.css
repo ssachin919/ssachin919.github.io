@@ -95,15 +95,21 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background-image:
       radial-gradient(ellipse 55% 45% at 0% 100%, var(--mbb-glow), transparent 70%),
       radial-gradient(ellipse 45% 35% at 100% 0%, color-mix(in srgb, var(--mbb-green) 12%, transparent), transparent 70%);
-    background-attachment: fixed;
+    background-attachment: scroll;
   }
-  html {
-    @apply font-sans;
+  @media (min-width: 1024px) and (hover: hover) {
+    body {
+      background-attachment: fixed;
+    }
   }
   h1,
   h2,

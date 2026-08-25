@@ -10,3 +10,10 @@ export const brand = {
   border: "rgba(255,255,255,0.12)",
   mutedText: "#A3A3A3",
 } as const;
+
+/** Site owner — first name Swami, second name Sachin Anand. */
+export const person = {
+  firstName: "Swami",
+  lastName: "Sachin Anand",
+  fullName: "Swami Sachin Anand",
+} as const;

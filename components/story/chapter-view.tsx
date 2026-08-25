@@ -14,6 +14,7 @@ import {
 } from "@/components/story/motion";
 import { StoryContactForm } from "@/components/story/story-contact-form";
 import { StorySocialLinks } from "@/components/story/story-social-links";
+import { person } from "@/lib/brand";
 import type { StoryChapter } from "@/lib/story/chapters";
 import { cn } from "@/lib/utils";
 
@@ -105,22 +106,27 @@ function HeroChapter({
     <section
       id={chapter.id}
       data-chapter={chapter.id}
-      className="relative flex min-h-[100svh] scroll-mt-0 flex-col justify-end overflow-hidden border-b border-white/5 md:justify-center"
+      className="relative flex min-h-[100svh] scroll-mt-14 flex-col justify-end overflow-hidden border-b border-white/5 md:justify-center lg:scroll-mt-0"
     >
       <HeroAtmosphere />
       <SceneLayer chapter={chapter} scrollProgress={scrollProgress} />
-      <div className="story-chapter-content relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 pb-24 pt-28 md:flex-row md:items-center md:gap-14 md:px-10 lg:pl-28">
+      <div className="story-chapter-content relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 pb-20 pt-28 sm:gap-10 sm:px-6 md:flex-row md:items-center md:gap-14 md:px-10 lg:pl-28">
         <Stagger className="min-w-0 flex-1">
           <StaggerItem>
-            <p className="font-mono text-xs tracking-[0.28em] text-mbb-green uppercase">
+            <p className="font-mono text-xs tracking-[0.2em] text-mbb-green uppercase sm:tracking-[0.28em]">
               Mission
             </p>
           </StaggerItem>
           <StaggerItem>
-            <h1 className="mt-4 font-heading text-4xl font-extrabold tracking-tight md:text-6xl lg:text-7xl">
+            <h1 className="mt-3 font-heading text-[2.35rem] leading-[1.1] font-extrabold tracking-tight sm:mt-4 sm:text-4xl md:text-6xl lg:text-7xl">
               <span className="text-white">Bhavya </span>
               <span className="text-mbb-green">Bharat</span>
             </h1>
+          </StaggerItem>
+          <StaggerItem>
+            <p className="mt-3 font-mono text-sm tracking-[0.08em] text-white/70 sm:text-base">
+              {person.fullName}
+            </p>
           </StaggerItem>
           {chapter.bodyExtra ? (
             <StaggerItem>
@@ -130,12 +136,12 @@ function HeroChapter({
             </StaggerItem>
           ) : null}
           <StaggerItem>
-            <p className="mt-6 max-w-xl text-lg text-muted-foreground md:text-xl">
+            <p className="mt-5 max-w-xl text-base text-muted-foreground sm:mt-6 sm:text-lg md:text-xl">
               {chapter.body}
             </p>
           </StaggerItem>
           <StaggerItem>
-            <div className="mt-10 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
+            <div className="mt-8 flex flex-col gap-5 sm:mt-10 sm:flex-row sm:items-center sm:gap-10">
               {chapter.ctaHref ? <ScrollCue href={chapter.ctaHref} /> : null}
               <StorySocialLinks />
             </div>
@@ -146,18 +152,18 @@ function HeroChapter({
         </Stagger>
 
         <motion.div
-          className="relative mx-auto h-40 w-40 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
+          className="relative mx-auto h-36 w-36 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
           animate={reduce ? undefined : { y: [0, -8, 0] }}
           transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <div className="absolute inset-0 rounded-full bg-mbb-green/20 blur-2xl" />
           <Image
             src={avatarSrc}
-            alt="Sachin Anand"
+            alt={person.fullName}
             fill
             priority
             className="rounded-full object-cover"
-            sizes="(max-width: 768px) 192px, 256px"
+            sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 256px"
           />
         </motion.div>
       </div>
@@ -203,20 +209,20 @@ function PortraitChapter({
     <section
       id={chapter.id}
       data-chapter={chapter.id}
-      className="relative flex min-h-[120svh] scroll-mt-4 flex-col justify-center overflow-hidden border-b border-white/5 md:min-h-[140svh]"
+      className="relative flex min-h-[100svh] scroll-mt-14 flex-col justify-center overflow-hidden border-b border-white/5 md:min-h-[140svh] lg:scroll-mt-0"
     >
       <SceneLayer chapter={chapter} scrollProgress={scrollProgress} />
-      <div className="story-chapter-content relative z-10 mx-auto grid w-full max-w-5xl items-center gap-10 px-6 py-24 md:grid-cols-[minmax(0,1fr)_220px] md:px-10 lg:pl-28">
-        <div>
+      <div className="story-chapter-content relative z-10 mx-auto grid w-full max-w-5xl items-center gap-8 px-4 py-20 sm:gap-10 sm:px-6 md:grid-cols-[minmax(0,1fr)_220px] md:px-10 md:py-24 lg:pl-28">
+        <div className="min-w-0">
           {chapter.eyebrow ? (
-            <p className="font-mono text-xs tracking-[0.18em] text-mbb-green uppercase">
+            <p className="font-mono text-xs tracking-[0.14em] text-mbb-green uppercase sm:tracking-[0.18em]">
               {chapter.eyebrow}
             </p>
           ) : null}
-          <h2 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
+          <h2 className="mt-3 font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
             {chapter.title}
           </h2>
-          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
             {chapter.body}
           </p>
           <div className="mt-4">
@@ -226,7 +232,7 @@ function PortraitChapter({
         </div>
         {chapter.portraitSrc ? (
           <motion.div
-            className="relative mx-auto aspect-square w-44 overflow-hidden rounded-full md:w-56 lg:w-64"
+            className="relative mx-auto aspect-square w-36 overflow-hidden rounded-full sm:w-44 md:w-56 lg:w-64"
             animate={reduce ? undefined : { y: [0, -6, 0] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
             whileHover={reduce ? undefined : { scale: 1.03 }}
@@ -234,10 +240,10 @@ function PortraitChapter({
             <div className="absolute inset-0 rounded-full bg-mbb-green/15 blur-xl" />
             <Image
               src={chapter.portraitSrc}
-              alt="Sachin Anand"
+              alt={person.fullName}
               fill
               className="rounded-full object-cover"
-              sizes="256px"
+              sizes="(max-width: 640px) 144px, 256px"
             />
           </motion.div>
         ) : null}
@@ -255,23 +261,23 @@ function TwinChapter({ chapter }: { chapter: StoryChapter }) {
     <section
       id={chapter.id}
       data-chapter={chapter.id}
-      className="relative flex min-h-[140svh] scroll-mt-4 flex-col justify-center overflow-hidden border-b border-white/5"
+      className="relative flex min-h-[100svh] scroll-mt-14 flex-col justify-center overflow-hidden border-b border-white/5 md:min-h-[140svh] lg:scroll-mt-0"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_40%,rgba(57,181,74,0.12),transparent_55%),radial-gradient(ellipse_at_80%_60%,rgba(57,181,74,0.08),transparent_50%)]" />
-      <div className="story-chapter-content relative z-10 mx-auto w-full max-w-5xl px-6 py-24 md:px-10 lg:pl-28">
+      <div className="story-chapter-content relative z-10 mx-auto w-full max-w-5xl px-4 py-20 sm:px-6 md:px-10 md:py-24 lg:pl-28">
         {chapter.eyebrow ? (
-          <p className="font-mono text-xs tracking-[0.18em] text-mbb-green uppercase">
+          <p className="font-mono text-xs tracking-[0.14em] text-mbb-green uppercase sm:tracking-[0.18em]">
             {chapter.eyebrow}
           </p>
         ) : null}
-        <h2 className="mt-3 max-w-2xl font-heading text-3xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
+        <h2 className="mt-3 max-w-2xl font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
           {chapter.title}
         </h2>
-        <p className="mt-5 max-w-2xl text-base text-muted-foreground md:text-lg">
+        <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:mt-5 md:text-lg">
           {chapter.body}
         </p>
 
-        <div className="mt-14 grid gap-14 md:grid-cols-2 md:gap-16">
+        <div className="mt-10 grid gap-10 sm:mt-14 md:grid-cols-2 md:gap-16">
           {[twin.left, twin.right].map((block) => (
             <motion.div
               key={block.name}
@@ -282,7 +288,7 @@ function TwinChapter({ chapter }: { chapter: StoryChapter }) {
                   : { y: -4, transition: { type: "spring", stiffness: 350, damping: 24 } }
               }
             >
-              <h3 className="font-heading text-2xl font-semibold text-white md:text-3xl">
+              <h3 className="font-heading text-xl font-semibold text-white sm:text-2xl md:text-3xl">
                 {block.name}
               </h3>
               <p className="font-mono text-xs tracking-[0.14em] text-mbb-green uppercase">
@@ -296,7 +302,7 @@ function TwinChapter({ chapter }: { chapter: StoryChapter }) {
                   href={block.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-mono text-sm tracking-wide text-mbb-green underline-offset-4 hover:underline"
+                  className="inline-flex min-h-11 items-center gap-1 font-mono text-sm tracking-wide text-mbb-green underline-offset-4 hover:underline"
                   whileHover={reduce ? undefined : { x: 4 }}
                 >
                   {block.hrefLabel}
@@ -319,19 +325,19 @@ function CloseChapter({ chapter }: { chapter: StoryChapter }) {
     <section
       id={chapter.id}
       data-chapter={chapter.id}
-      className="relative flex min-h-[120svh] scroll-mt-4 flex-col justify-center overflow-hidden"
+      className="relative flex min-h-[100svh] scroll-mt-14 flex-col justify-center overflow-hidden lg:scroll-mt-0"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(57,181,74,0.16),transparent_60%)]" />
-      <div className="story-chapter-content relative z-10 mx-auto w-full max-w-3xl px-6 py-24 md:px-10 lg:pl-28">
+      <div className="story-chapter-content relative z-10 mx-auto w-full max-w-3xl px-4 py-20 sm:px-6 md:px-10 md:py-24 lg:pl-28">
         {chapter.eyebrow ? (
-          <p className="font-mono text-xs tracking-[0.18em] text-mbb-green uppercase">
+          <p className="font-mono text-xs tracking-[0.14em] text-mbb-green uppercase sm:tracking-[0.18em]">
             {chapter.eyebrow}
           </p>
         ) : null}
-        <h2 className="mt-3 font-heading text-3xl font-semibold tracking-tight text-white md:text-5xl">
+        <h2 className="mt-3 font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-5xl">
           {chapter.title}
         </h2>
-        <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+        <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
           {chapter.body}
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
@@ -339,7 +345,7 @@ function CloseChapter({ chapter }: { chapter: StoryChapter }) {
             <motion.a
               href={chapter.cvHref}
               download
-              className="inline-flex font-mono text-sm tracking-[0.14em] text-mbb-green uppercase underline-offset-4 hover:underline"
+              className="inline-flex min-h-11 items-center font-mono text-sm tracking-[0.14em] text-mbb-green uppercase underline-offset-4 hover:underline"
               whileHover={reduce ? undefined : { x: 3 }}
             >
               {chapter.ctaLabel ?? "Download CV"} →

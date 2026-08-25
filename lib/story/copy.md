@@ -9,6 +9,7 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 ### hero — Mission
 
 **Title:** Mission Bhavya Bharat  
+**Byline:** Swami Sachin Anand  
 **Body:** Transforming professions, elevating consciousness, and contributing to Bharat’s rise.  
 **Body extra:** Technology · Spirituality · Nation Building  
 **CTA:** Begin the journey
@@ -415,7 +416,7 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 ## Meta & social
 
-- **Page title:** Mission Bhavya Bharat | Sachin Anand
+- **Page title:** Mission Bhavya Bharat | Swami Sachin Anand
 - **LinkedIn:** linkedin.com/in/sachin-anand-mbb
 - **Instagram:** instagram.com/sachin_anand_mbb
 - **Humantra:** https://humantra.yoga/

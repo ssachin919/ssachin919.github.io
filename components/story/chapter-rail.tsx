@@ -1,6 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { railChapters } from "@/lib/story/chapters";
@@ -11,6 +13,25 @@ type ChapterRailProps = {
 
 export function ChapterRail({ activeId }: ChapterRailProps) {
   const reduce = useReducedMotion();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setMenuOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [menuOpen]);
+
+  function goToChapter() {
+    setMenuOpen(false);
+  }
 
   return (
     <>
@@ -81,20 +102,100 @@ export function ChapterRail({ activeId }: ChapterRailProps) {
             style={{ transformOrigin: "left center" }}
           />
         </div>
-        <div className="flex items-center justify-between bg-black/70 px-4 py-2 backdrop-blur-sm">
-          <p className="font-mono text-[10px] tracking-[0.16em] text-mbb-green uppercase">
+        <div className="flex items-center justify-between gap-3 bg-black/80 px-3 py-2.5 backdrop-blur-md pt-[max(0.625rem,env(safe-area-inset-top))]">
+          <p className="min-w-0 truncate font-mono text-[11px] tracking-[0.12em] text-mbb-green uppercase">
             Mission Bhavya Bharat
           </p>
-          <motion.p
-            key={activeId}
-            initial={reduce ? false : { opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-mono text-[10px] tracking-wider text-muted-foreground uppercase"
-          >
-            {railChapters.find((c) => c.id === activeId)?.railLabel ?? ""}
-          </motion.p>
+          <div className="flex shrink-0 items-center gap-2">
+            <motion.p
+              key={activeId}
+              initial={reduce ? false : { opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="hidden font-mono text-[11px] tracking-wider text-muted-foreground uppercase sm:block"
+            >
+              {railChapters.find((c) => c.id === activeId)?.railLabel ?? ""}
+            </motion.p>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-white transition-colors hover:bg-white/10"
+              aria-label="Open chapter menu"
+              aria-expanded={menuOpen}
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {menuOpen ? (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close chapter menu"
+              className="fixed inset-0 z-50 bg-black/70 lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMenuOpen(false)}
+            />
+            <motion.nav
+              aria-label="Journey chapters"
+              className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col border-l border-white/10 bg-[#0a0a0a] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] lg:hidden"
+              initial={reduce ? false : { x: "100%" }}
+              animate={{ x: 0 }}
+              exit={reduce ? undefined : { x: "100%" }}
+              transition={
+                reduce
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 340, damping: 34 }
+              }
+            >
+              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+                <p className="font-mono text-[11px] tracking-[0.14em] text-mbb-green uppercase">
+                  Chapters
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen(false)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-white/5 hover:text-white"
+                  aria-label="Close chapter menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <ol className="flex-1 overflow-y-auto px-3 py-3">
+                {railChapters.map((ch) => {
+                  const active = ch.id === activeId;
+                  return (
+                    <li key={ch.id}>
+                      <a
+                        href={`#${ch.id}`}
+                        onClick={goToChapter}
+                        className={cn(
+                          "flex min-h-11 items-center gap-3 rounded-md px-3 py-2.5 font-mono text-sm tracking-[0.1em] uppercase transition-colors",
+                          active
+                            ? "bg-mbb-green/10 text-mbb-green"
+                            : "text-muted-foreground hover:bg-white/5 hover:text-white"
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "h-2 w-2 shrink-0 rounded-full",
+                            active ? "bg-mbb-green" : "bg-white/25"
+                          )}
+                        />
+                        {ch.railLabel}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ol>
+            </motion.nav>
+          </>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 }

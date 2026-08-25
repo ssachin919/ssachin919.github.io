@@ -27,8 +27,8 @@ export function StorySocialLinks({
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-              "relative font-mono tracking-[0.14em] text-mbb-green uppercase",
-              compact ? "text-[10px]" : "text-xs"
+              "relative inline-flex min-h-10 items-center font-mono tracking-[0.14em] text-mbb-green uppercase",
+              compact ? "text-xs" : "text-xs sm:text-sm"
             )}
             whileHover={reduce ? undefined : { y: -1 }}
             transition={{ type: "spring", stiffness: 400, damping: 24 }}

@@ -128,7 +128,7 @@ export function HeroAtmosphere() {
       {!reduce ? (
         <>
           <motion.div
-            className="absolute top-[18%] right-[12%] h-72 w-72 rounded-full bg-mbb-green/20 blur-[90px]"
+            className="absolute top-[18%] right-[12%] h-40 w-40 rounded-full bg-mbb-green/20 blur-[70px] sm:h-72 sm:w-72 sm:blur-[90px]"
             animate={{
               x: [0, 28, -12, 0],
               y: [0, -18, 14, 0],
@@ -137,7 +137,7 @@ export function HeroAtmosphere() {
             transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute bottom-[10%] left-[8%] h-56 w-56 rounded-full bg-mbb-green/15 blur-[80px]"
+            className="absolute bottom-[10%] left-[8%] h-32 w-32 rounded-full bg-mbb-green/15 blur-[60px] sm:h-56 sm:w-56 sm:blur-[80px]"
             animate={{
               x: [0, -20, 16, 0],
               y: [0, 22, -10, 0],
@@ -146,14 +146,14 @@ export function HeroAtmosphere() {
             transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
           />
           <motion.div
-            className="absolute top-1/2 left-1/2 h-px w-[min(70vw,520px)] -translate-x-1/2 origin-left bg-gradient-to-r from-transparent via-mbb-green/40 to-transparent"
+            className="absolute top-1/2 left-1/2 h-px w-[min(85vw,520px)] -translate-x-1/2 origin-left bg-gradient-to-r from-transparent via-mbb-green/40 to-transparent"
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 1 }}
             transition={{ duration: 1.2, delay: 0.4, ease }}
           />
         </>
       ) : (
-        <div className="absolute top-[20%] right-[15%] h-64 w-64 rounded-full bg-mbb-green/15 blur-[80px]" />
+        <div className="absolute top-[20%] right-[15%] h-40 w-40 rounded-full bg-mbb-green/15 blur-[60px] sm:h-64 sm:w-64 sm:blur-[80px]" />
       )}
     </div>
   );
