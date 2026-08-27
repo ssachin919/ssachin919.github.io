@@ -480,8 +480,7 @@ export const diveDeeps: Record<string, DiveDeep> = {
       {
         heading: "Ways in",
         bullets: [
-          "Write through the contact form",
-          "Follow on LinkedIn and Instagram",
+          "Connect on any of the social channels",
           "Visit Humantra and CoinsLive",
         ],
       },

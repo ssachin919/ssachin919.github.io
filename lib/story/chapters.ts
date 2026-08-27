@@ -48,6 +48,10 @@ export const socialLinks = [
     label: "Instagram",
     href: "https://instagram.com/sachin_anand_mbb",
   },
+  {
+    label: "YouTube",
+    href: "https://www.youtube.com/@sachin-anand-mbb",
+  },
 ] as const;
 
 export const productLinks = {
@@ -180,7 +184,7 @@ export const storyChapters: StoryChapter[] = [
     railLabel: "Join",
     eyebrow: "Mission Bhavya Bharat",
     title: "Everyone deserves a glorious life.",
-    body: "If this arc resonates: build with us, learn with us, or simply say namaste.",
+    body: "If this arc resonates: build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.",
     variant: "close",
     pin: true,
   },

@@ -122,7 +122,7 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 **Eyebrow:** Mission Bhavya Bharat  
 **Title:** Everyone deserves a glorious life.  
-**Body:** If this arc resonates: build with us, learn with us, or simply say namaste.
+**Body:** If this arc resonates: build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.
 
 ---
 
@@ -393,22 +393,10 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 **Summary:** Build, learn, or simply say namaste. Skills, education, and research are open in the side panel.
 
 - **Ways in:**
-  - Write through the contact form
-  - Follow on LinkedIn and Instagram
+  - Connect on any of the social channels
   - Visit Humantra and CoinsLive
 
 **Links:** Skills · Education · Research
-
----
-
-## Contact form
-
-- **Name** placeholder: Your name
-- **Email** placeholder: you@example.com
-- **Message** placeholder: Build with us, learn with us, or simply say namaste.
-- **Submit:** Send message / Sending…
-- **Success:** Message sent. Thank you.
-- **Missing config:** Contact form is not configured yet. Reach out via LinkedIn in the meantime.
 
 ---
 
@@ -417,5 +405,6 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 - **Page title:** Mission Bhavya Bharat | Swami Sachin Anand
 - **LinkedIn:** linkedin.com/in/sachin-anand-mbb
 - **Instagram:** instagram.com/sachin_anand_mbb
+- **YouTube:** youtube.com/@sachin-anand-mbb
 - **Humantra:** https://humantra.yoga/
 - **CoinsLive:** https://coinslive.in/

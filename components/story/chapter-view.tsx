@@ -12,7 +12,6 @@ import {
   Stagger,
   StaggerItem,
 } from "@/components/story/motion";
-import { StoryContactForm } from "@/components/story/story-contact-form";
 import { StorySocialLinks } from "@/components/story/story-social-links";
 import { person } from "@/lib/brand";
 import type { StoryChapter } from "@/lib/story/chapters";
@@ -342,7 +341,6 @@ function CloseChapter({ chapter }: { chapter: StoryChapter }) {
           <StorySocialLinks />
         </div>
         <ChapterDiveTriggers chapterId={chapter.id} />
-        <StoryContactForm />
       </div>
     </section>
   );
