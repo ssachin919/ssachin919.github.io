@@ -122,8 +122,7 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 **Eyebrow:** Mission Bhavya Bharat  
 **Title:** Everyone deserves a glorious life.  
-**Body:** If this arc resonates: build with us, learn with us, or simply say namaste.  
-**CTA:** Download CV
+**Body:** If this arc resonates: build with us, learn with us, or simply say namaste.
 
 ---
 
@@ -394,7 +393,6 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 **Summary:** Build, learn, or simply say namaste. Skills, education, and research are open in the side panel.
 
 - **Ways in:**
-  - Download the CV
   - Write through the contact form
   - Follow on LinkedIn and Instagram
   - Visit Humantra and CoinsLive

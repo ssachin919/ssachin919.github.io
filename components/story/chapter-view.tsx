@@ -319,8 +319,6 @@ function TwinChapter({ chapter }: { chapter: StoryChapter }) {
 }
 
 function CloseChapter({ chapter }: { chapter: StoryChapter }) {
-  const reduce = useReducedMotion();
-
   return (
     <section
       id={chapter.id}
@@ -341,16 +339,6 @@ function CloseChapter({ chapter }: { chapter: StoryChapter }) {
           {chapter.body}
         </p>
         <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
-          {chapter.cvHref ? (
-            <motion.a
-              href={chapter.cvHref}
-              download
-              className="inline-flex min-h-11 items-center font-mono text-sm tracking-[0.14em] text-mbb-green uppercase underline-offset-4 hover:underline"
-              whileHover={reduce ? undefined : { x: 3 }}
-            >
-              {chapter.ctaLabel ?? "Download CV"} →
-            </motion.a>
-          ) : null}
           <StorySocialLinks />
         </div>
         <ChapterDiveTriggers chapterId={chapter.id} />

@@ -32,7 +32,6 @@ export type StoryChapter = {
   twin?: { left: TwinBlock; right: TwinBlock };
   portraitSrc?: string;
   coverSrc?: string;
-  cvHref?: string;
   ctaLabel?: string;
   ctaHref?: string;
 };
@@ -184,8 +183,6 @@ export const storyChapters: StoryChapter[] = [
     body: "If this arc resonates: build with us, learn with us, or simply say namaste.",
     variant: "close",
     pin: true,
-    cvHref: withBase("/cv/sachin-anand.pdf"),
-    ctaLabel: "Download CV",
   },
 ];
 
