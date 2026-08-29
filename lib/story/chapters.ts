@@ -134,7 +134,7 @@ export const storyChapters: StoryChapter[] = [
     railLabel: "Webyalaya",
     eyebrow: "Founded · Incubated by IIM Lucknow",
     title: "Founded. Funded. Exited.",
-    body: "Webyalaya grew under IIM Lucknow’s incubation. The exit cleared the ground for what came next.",
+    body: "Webyalaya grew under IIM Lucknow’s incubation. When the CTO role required travel that conflicted with Vrindavan as first priority, stepping down was the honest move — and cleared the ground for what came next.",
   },
   {
     id: "twin",

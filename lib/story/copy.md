@@ -77,7 +77,7 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 **Eyebrow:** Founded · Incubated by IIM Lucknow  
 **Title:** Founded. Funded. Exited.  
-**Body:** Webyalaya grew under IIM Lucknow’s incubation. The exit cleared the ground for what came next.
+**Body:** Webyalaya grew under IIM Lucknow’s incubation. When the CTO role required travel that conflicted with Vrindavan as first priority, stepping down was the honest move — and cleared the ground for what came next.
 
 ---
 
@@ -317,8 +317,9 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 - **Architecture:** Next.js on Vercel; AWS ECS/Fargate with Docker; Azure PostgreSQL Flexible Server; LiveKit on Azure VMs for realtime video; S3 and Lightsail; Cloudflare edge; GitHub Actions CI/CD.
 - **Team & ops:** Cross-functional engineering leadership, intern hiring and orientation, Azure DevOps delivery. Microsoft 365 via Azure startup credits, Startup India recognition, Amazon SES, multi-cloud cost discipline.
 - **Traction notes:** 100+ active users through word of mouth. Team of 10–12 interns. 50/50 gender hiring from inception; woman-led with a female co-founder on product and growth.
+- **Stepping down:** Stepped down as CTO when alignment became clear. Vrindavan is the first priority — the foundation that helps me function well and give my best. The role required physical travel for pitching and other startup responsibilities; understandable for a startup, but not how I have chosen to live and work. No negativity: a shared vision, different ways of working. Wishing the entire Webyalaya team success building a peer-to-peer learning platform where people truly teach and learn from one another.
 
-**Links:** Skills
+**Links:** Skills · [LinkedIn post on stepping down](https://www.linkedin.com/posts/sachin-anand-mbb_today-i-stepped-down-from-the-role-of-cto-activity-7451907560754044929-K4Io)
 
 ---
 

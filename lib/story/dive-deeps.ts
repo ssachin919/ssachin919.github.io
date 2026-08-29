@@ -364,8 +364,18 @@ export const diveDeeps: Record<string, DiveDeep> = {
         heading: "Traction notes",
         body: "100+ active users through word of mouth. Team of 10–12 interns. 50/50 gender hiring from inception; woman-led with a female co-founder on product and growth.",
       },
+      {
+        heading: "Stepping down",
+        body: "Stepped down as CTO when alignment became clear. Vrindavan is the first priority — the foundation that helps me function well and give my best. The role required physical travel for pitching and other startup responsibilities; understandable for a startup, but not how I have chosen to live and work. No negativity: a shared vision, different ways of working. Wishing the entire Webyalaya team success building a peer-to-peer learning platform where people truly teach and learn from one another.",
+      },
     ],
-    links: [{ label: "Skills", href: "#dive:skills" }],
+    links: [
+      { label: "Skills", href: "#dive:skills" },
+      {
+        label: "LinkedIn post on stepping down",
+        href: "https://www.linkedin.com/posts/sachin-anand-mbb_today-i-stepped-down-from-the-role-of-cto-activity-7451907560754044929-K4Io",
+      },
+    ],
   },
 
   twin: {
