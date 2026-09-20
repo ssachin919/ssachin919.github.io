@@ -45,17 +45,25 @@ export function DiveSidePanel() {
 
   useEffect(() => {
     if (!open) return;
+
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") closeAll();
     }
+
     window.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
+
+    if (!isSheet) {
+      return () => window.removeEventListener("keydown", onKey);
+    }
+
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
+      document.body.style.overflow = previousOverflow;
     };
-  }, [open, closeAll]);
+  }, [open, isSheet, closeAll]);
 
   const closed = isSheet ? { y: "100%", x: 0 } : { x: "100%", y: 0 };
   const opened = { x: 0, y: 0 };
@@ -66,7 +74,7 @@ export function DiveSidePanel() {
         type="button"
         aria-label="Close dive panel"
         className={cn(
-          "fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 lg:bg-black/25",
+          "fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 sm:pointer-events-none lg:bg-black/25",
           open
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -76,7 +84,10 @@ export function DiveSidePanel() {
       />
 
       <motion.aside
-        className="fixed inset-x-0 bottom-0 z-50 flex max-h-[min(92dvh,100%)] w-full flex-col rounded-t-2xl border border-white/10 border-b-0 bg-[#0a0a0a]/98 shadow-2xl backdrop-blur-md sm:inset-x-auto sm:top-0 sm:right-0 sm:bottom-auto sm:h-full sm:max-h-none sm:w-[min(100%,28rem)] sm:rounded-none sm:border-t-0 sm:border-r-0 sm:border-b-0 sm:border-l sm:max-w-lg"
+        className={cn(
+          "fixed inset-x-0 bottom-0 z-50 flex max-h-[min(92dvh,100%)] w-full flex-col rounded-t-2xl border border-white/10 border-b-0 bg-[#0a0a0a]/98 shadow-2xl backdrop-blur-md sm:inset-x-auto sm:top-0 sm:right-0 sm:bottom-auto sm:h-full sm:max-h-none sm:w-[min(100%,28rem)] sm:rounded-none sm:border-t-0 sm:border-r-0 sm:border-b-0 sm:border-l sm:max-w-lg",
+          open ? "pointer-events-auto" : "pointer-events-none"
+        )}
         initial={false}
         animate={open ? opened : closed}
         transition={
