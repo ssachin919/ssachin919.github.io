@@ -22,7 +22,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const metadata: Metadata = {
   title: `Mission Bhavya Bharat | ${person.fullName}`,
   description:
-    "From IIT Kanpur to Vrindavan — building Humantra and CoinsLive for clarity within and opportunity without. Technology · Spirituality · Nation Building.",
+    "My Journey — the path to Akhand Vrindavan Vaas and Mission Bhavya Bharat. From IIT Kanpur to Vrindavan: Humantra, CoinsLive, and a life rooted in dharma.",
   icons: {
     icon: [
       { url: `${basePath}/favicon.ico`, sizes: "any" },

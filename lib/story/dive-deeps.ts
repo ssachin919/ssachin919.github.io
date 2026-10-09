@@ -184,18 +184,26 @@ export const diveDeeps: Record<string, DiveDeep> = {
     title: "Mission Bhavya Bharat",
     eyebrow: "The spine",
     summary:
-      "Technology, spirituality, and nation building as one practice. Dive into skills, education, and the products that carry the mission.",
+      "The book tells the inner journey. This site walks the public arc — technology, spirituality, and nation building as one practice.",
     sections: [
+      {
+        heading: "My Journey",
+        body: "My Journey: The Path to Akhand Vrindavan Vaas and Mission Bhavya Bharat — how losing faith became the way it was found, and every road led back to Vrindavan.",
+      },
       {
         heading: "What this site is",
         body: "A scroll story of formation. Optional panels hold the engineering depth: skills, roles, education, and research.",
       },
       {
         heading: "Open next",
-        body: "Use the chips below each chapter, or open Skills and Education from here.",
+        body: "Read the book on Amazon, use the chips below each chapter, or open Skills and Education from here.",
       },
     ],
     links: [
+      {
+        label: "Read My Journey on Amazon",
+        href: "https://www.amazon.in/dp/B0HLWJR4QJ",
+      },
       { label: "Open skills", href: "#dive:skills" },
       { label: "Open education", href: "#dive:education" },
     ],

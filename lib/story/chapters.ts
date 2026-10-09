@@ -14,6 +14,15 @@ export type TwinBlock = {
   hrefLabel: string;
 };
 
+export type StoryBook = {
+  title: string;
+  subtitle: string;
+  href: string;
+  hrefLabel: string;
+  /** Optional cover image; falls back to a branded typographic cover */
+  coverSrc?: string;
+};
+
 export type StoryChapter = {
   id: string;
   railLabel: string;
@@ -32,6 +41,7 @@ export type StoryChapter = {
   twin?: { left: TwinBlock; right: TwinBlock };
   portraitSrc?: string;
   coverSrc?: string;
+  book?: StoryBook;
   ctaLabel?: string;
   ctaHref?: string;
 };
@@ -57,19 +67,30 @@ export const socialLinks = [
 export const productLinks = {
   humantra: "https://humantra.yoga/",
   coinslive: "https://coinslive.in/",
+  book: "https://www.amazon.in/dp/B0HLWJR4QJ",
 } as const;
+
+export const storyBook: StoryBook = {
+  title: "My Journey",
+  subtitle:
+    "The Path to Akhand Vrindavan Vaas and Mission Bhavya Bharat",
+  href: productLinks.book,
+  hrefLabel: "Read on Amazon",
+  coverSrc: withBase("/pictures/my-journey-cover.webp"),
+};
 
 export const storyChapters: StoryChapter[] = [
   {
     id: "hero",
-    railLabel: "Mission",
+    railLabel: "Journey",
     variant: "hero",
     title: "Mission Bhavya Bharat",
-    body: "Transforming professions, elevating consciousness, and contributing to Bharat's rise.",
+    body: "The story of how a broken faith became a vow in Vrindavan — and Mission Bhavya Bharat the work that followed.",
     bodyExtra: "Technology · Spirituality · Nation Building",
     scene: "india-glow",
     portraitSrc: withBase("/pictures/sachin-avatar-circle.webp"),
-    ctaLabel: "Begin the journey",
+    book: storyBook,
+    ctaLabel: "Walk the story",
     ctaHref: "#iit",
   },
   {
@@ -184,9 +205,10 @@ export const storyChapters: StoryChapter[] = [
     railLabel: "Join",
     eyebrow: "Mission Bhavya Bharat",
     title: "Everyone deserves a glorious life.",
-    body: "If this arc resonates: build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.",
+    body: "If this arc resonates: read the book, build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.",
     variant: "close",
     pin: true,
+    book: storyBook,
   },
 ];
 

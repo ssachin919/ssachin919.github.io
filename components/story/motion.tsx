@@ -159,7 +159,13 @@ export function HeroAtmosphere() {
   );
 }
 
-export function ScrollCue({ href }: { href: string }) {
+export function ScrollCue({
+  href,
+  label = "Begin the journey",
+}: {
+  href: string;
+  label?: string;
+}) {
   const reduce = useReducedMotion();
   return (
     <motion.a
@@ -168,7 +174,7 @@ export function ScrollCue({ href }: { href: string }) {
       whileHover={reduce ? undefined : { y: 2 }}
       transition={{ type: "spring", stiffness: 400, damping: 22 }}
     >
-      Begin the journey
+      {label}
       <motion.span
         aria-hidden
         animate={reduce ? undefined : { y: [0, 4, 0] }}

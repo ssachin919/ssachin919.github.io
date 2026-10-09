@@ -6,13 +6,17 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 ## Scroll chapters
 
-### hero — Mission
+### hero — Journey
 
 **Title:** Mission Bhavya Bharat  
 **Byline:** Swami Sachin Anand  
-**Body:** Transforming professions, elevating consciousness, and contributing to Bharat’s rise.  
+**Book:** My Journey — The Path to Akhand Vrindavan Vaas and Mission Bhavya Bharat  
+**Book URL:** https://www.amazon.in/dp/B0HLWJR4QJ  
+**Cover:** `/pictures/my-journey-cover.webp` (enhanced from DIGITAL_BOOK_THUMBNAIL)  
+**Body:** The story of how a broken faith became a vow in Vrindavan — and Mission Bhavya Bharat the work that followed.  
 **Body extra:** Technology · Spirituality · Nation Building  
-**CTA:** Begin the journey
+**Primary CTA:** Read on Amazon  
+**Secondary CTA:** Walk the story
 
 ---
 
@@ -122,7 +126,8 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 **Eyebrow:** Mission Bhavya Bharat  
 **Title:** Everyone deserves a glorious life.  
-**Body:** If this arc resonates: build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.
+**Body:** If this arc resonates: read the book, build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.  
+**Book CTA:** My Journey on Amazon — https://www.amazon.in/dp/B0HLWJR4QJ
 
 ---
 
@@ -208,12 +213,13 @@ Editable reference for all narrative copy. Runtime source of truth remains `chap
 
 **Eyebrow:** The spine  
 **Title:** Mission Bhavya Bharat  
-**Summary:** Technology, spirituality, and nation building as one practice. Dive into skills, education, and the products that carry the mission.
+**Summary:** The book tells the inner journey. This site walks the public arc — technology, spirituality, and nation building as one practice.
 
+- **My Journey:** My Journey: The Path to Akhand Vrindavan Vaas and Mission Bhavya Bharat — how losing faith became the way it was found, and every road led back to Vrindavan.
 - **What this site is:** A scroll story of formation. Optional panels hold the engineering depth: skills, roles, education, and research.
-- **Open next:** Use the chips below each chapter, or open Skills and Education from here.
+- **Open next:** Read the book on Amazon, use the chips below each chapter, or open Skills and Education from here.
 
-**Links:** Open skills · Open education
+**Links:** Read My Journey on Amazon · Open skills · Open education
 
 ---
 

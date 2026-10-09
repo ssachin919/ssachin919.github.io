@@ -90,6 +90,99 @@ function MapsLink({ chapter }: { chapter: StoryChapter }) {
   );
 }
 
+function BookCoverVisual({
+  book,
+  className,
+}: {
+  book: NonNullable<StoryChapter["book"]>;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+
+  if (book.coverSrc) {
+    return (
+      <motion.a
+        href={book.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cn(
+          "relative mx-auto block aspect-[3/4] w-40 shrink-0 sm:w-48 md:mx-0 md:w-56 lg:w-64",
+          className
+        )}
+        aria-label={`${book.title} — ${book.hrefLabel}`}
+        animate={reduce ? undefined : { y: [0, -8, 0] }}
+        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+        whileHover={reduce ? undefined : { y: -4, rotate: -1 }}
+      >
+        <div className="absolute -inset-4 rounded-lg bg-mbb-green/20 blur-2xl" />
+        <Image
+          src={book.coverSrc}
+          alt={`${book.title}: ${book.subtitle}`}
+          fill
+          priority
+          className="rounded-sm object-cover shadow-[0_24px_60px_rgba(0,0,0,0.55)] ring-1 ring-white/15"
+          sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, 256px"
+        />
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.a
+      href={book.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        "group relative mx-auto block w-[9.5rem] shrink-0 perspective-[900px] sm:w-44 md:mx-0 md:w-52 lg:w-60",
+        className
+      )}
+      aria-label={`${book.title} — ${book.hrefLabel}`}
+      animate={reduce ? undefined : { y: [0, -8, 0] }}
+      transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+      whileHover={reduce ? undefined : { y: -4 }}
+    >
+      <div className="absolute -inset-6 rounded-full bg-mbb-green/25 blur-3xl" />
+      <div
+        className={cn(
+          "relative aspect-[2/3] origin-left rounded-sm bg-[#0c120e] shadow-[0_28px_70px_rgba(0,0,0,0.65)] ring-1 ring-white/12",
+          "transition-transform duration-500 ease-out",
+          !reduce && "group-hover:[transform:rotateY(-12deg)_rotateZ(-1deg)]"
+        )}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {/* Spine edge */}
+        <div
+          aria-hidden
+          className="absolute inset-y-0 left-0 w-2.5 rounded-l-sm bg-gradient-to-b from-mbb-green via-mbb-green-muted to-[#1a3d22]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-y-3 left-2.5 w-px bg-white/10"
+        />
+        <div className="flex h-full flex-col justify-between py-6 pr-4 pl-5 sm:py-7 sm:pr-5 sm:pl-6">
+          <div>
+            <p className="font-mono text-[0.55rem] tracking-[0.22em] text-mbb-green uppercase sm:text-[0.65rem]">
+              Kindle edition
+            </p>
+            <p className="mt-4 font-heading text-xl leading-tight font-extrabold tracking-tight text-white sm:text-2xl md:text-[1.65rem]">
+              {book.title}
+            </p>
+            <p className="mt-3 text-[0.65rem] leading-snug text-white/55 sm:text-xs">
+              {book.subtitle}
+            </p>
+          </div>
+          <div>
+            <div className="mb-3 h-px w-10 bg-mbb-green/70" />
+            <p className="font-mono text-[0.6rem] tracking-[0.12em] text-white/70 sm:text-xs">
+              {person.fullName}
+            </p>
+          </div>
+        </div>
+      </div>
+    </motion.a>
+  );
+}
+
 function HeroChapter({
   chapter,
   scrollProgress,
@@ -98,6 +191,7 @@ function HeroChapter({
   scrollProgress: number;
 }) {
   const reduce = useReducedMotion();
+  const book = chapter.book;
   const avatarSrc =
     chapter.portraitSrc ?? "/pictures/sachin-avatar-circle.webp";
 
@@ -127,7 +221,17 @@ function HeroChapter({
               {person.fullName}
             </p>
           </StaggerItem>
-          {chapter.bodyExtra ? (
+          {book ? (
+            <StaggerItem>
+              <p className="mt-4 max-w-xl text-sm tracking-wide text-white/85 sm:text-base md:text-lg">
+                <span className="font-heading font-semibold text-white">
+                  {book.title}
+                </span>
+                <span className="text-white/40"> — </span>
+                <span className="text-white/75">{book.subtitle}</span>
+              </p>
+            </StaggerItem>
+          ) : chapter.bodyExtra ? (
             <StaggerItem>
               <p className="mt-4 text-sm tracking-wide text-white/80 md:text-base">
                 {chapter.bodyExtra}
@@ -140,8 +244,27 @@ function HeroChapter({
             </p>
           </StaggerItem>
           <StaggerItem>
-            <div className="mt-8 flex flex-col gap-5 sm:mt-10 sm:flex-row sm:items-center sm:gap-10">
-              {chapter.ctaHref ? <ScrollCue href={chapter.ctaHref} /> : null}
+            <div className="mt-8 flex flex-col gap-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
+              {book ? (
+                <motion.a
+                  href={book.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-sm bg-mbb-green px-5 font-mono text-sm tracking-[0.14em] text-black uppercase"
+                  whileHover={reduce ? undefined : { scale: 1.02 }}
+                  whileTap={reduce ? undefined : { scale: 0.98 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 22 }}
+                >
+                  {book.hrefLabel}
+                  <span aria-hidden>→</span>
+                </motion.a>
+              ) : null}
+              {chapter.ctaHref ? (
+                <ScrollCue
+                  href={chapter.ctaHref}
+                  label={chapter.ctaLabel}
+                />
+              ) : null}
               <StorySocialLinks />
             </div>
           </StaggerItem>
@@ -150,21 +273,25 @@ function HeroChapter({
           </StaggerItem>
         </Stagger>
 
-        <motion.div
-          className="relative mx-auto h-36 w-36 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
-          animate={reduce ? undefined : { y: [0, -8, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="absolute inset-0 rounded-full bg-mbb-green/20 blur-2xl" />
-          <Image
-            src={avatarSrc}
-            alt={person.fullName}
-            fill
-            priority
-            className="rounded-full object-cover"
-            sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 256px"
-          />
-        </motion.div>
+        {book ? (
+          <BookCoverVisual book={book} />
+        ) : (
+          <motion.div
+            className="relative mx-auto h-36 w-36 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
+            animate={reduce ? undefined : { y: [0, -8, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <div className="absolute inset-0 rounded-full bg-mbb-green/20 blur-2xl" />
+            <Image
+              src={avatarSrc}
+              alt={person.fullName}
+              fill
+              priority
+              className="rounded-full object-cover"
+              sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 256px"
+            />
+          </motion.div>
+        )}
       </div>
     </section>
   );
@@ -318,6 +445,9 @@ function TwinChapter({ chapter }: { chapter: StoryChapter }) {
 }
 
 function CloseChapter({ chapter }: { chapter: StoryChapter }) {
+  const reduce = useReducedMotion();
+  const book = chapter.book;
+
   return (
     <section
       id={chapter.id}
@@ -337,7 +467,19 @@ function CloseChapter({ chapter }: { chapter: StoryChapter }) {
         <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
           {chapter.body}
         </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
+          {book ? (
+            <motion.a
+              href={book.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 font-mono text-sm tracking-wide text-mbb-green underline-offset-4 hover:underline"
+              whileHover={reduce ? undefined : { x: 4 }}
+            >
+              {book.title} on Amazon
+              <span aria-hidden>→</span>
+            </motion.a>
+          ) : null}
           <StorySocialLinks />
         </div>
         <ChapterDiveTriggers chapterId={chapter.id} />
