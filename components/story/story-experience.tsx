@@ -6,11 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { ChapterRail } from "@/components/story/chapter-rail";
 import { ChapterView } from "@/components/story/chapter-view";
-import { DivePanelProvider } from "@/components/story/dive-panel-context";
-import { DiveSidePanel } from "@/components/story/dive-side-panel";
 import { StorySocialLinks } from "@/components/story/story-social-links";
 import { person } from "@/lib/brand";
-import { storyChapters } from "@/lib/story/chapters";
+import { productLinks, storyChapters } from "@/lib/story/chapters";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -178,38 +176,39 @@ export function StoryExperience() {
   }, [isMobile]);
 
   return (
-    <DivePanelProvider>
-      <div ref={rootRef} className="relative overflow-x-hidden bg-black text-white">
-        <ChapterRail activeId={activeId} />
-        <main>
-          {storyChapters.map((chapter) => (
-            <ChapterView
-              key={chapter.id}
-              chapter={chapter}
-              scrollProgress={sceneProgress[chapter.id] ?? 0}
-            />
-          ))}
-        </main>
-        <footer className="border-t border-white/10 px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:pl-28">
-          <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 text-center sm:gap-4">
-            <p className="font-mono text-xs tracking-[0.12em] text-white/80 sm:tracking-[0.16em]">
-              {person.fullName}
-            </p>
-            <p className="max-w-sm font-mono text-[10px] leading-relaxed tracking-[0.12em] text-muted-foreground uppercase sm:max-w-none sm:tracking-[0.2em]">
-              Mission Bhavya Bharat
-              <span className="hidden sm:inline">
-                {" "}
-                · Technology · Spirituality · Nation Building
-              </span>
-            </p>
-            <p className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase sm:hidden">
-              Technology · Spirituality · Nation Building
-            </p>
-            <StorySocialLinks compact />
-          </div>
-        </footer>
-        <DiveSidePanel />
-      </div>
-    </DivePanelProvider>
+    <div ref={rootRef} className="relative overflow-x-hidden bg-black text-white">
+      <ChapterRail activeId={activeId} />
+      <main>
+        {storyChapters.map((chapter) => (
+          <ChapterView
+            key={chapter.id}
+            chapter={chapter}
+            scrollProgress={sceneProgress[chapter.id] ?? 0}
+          />
+        ))}
+      </main>
+      <footer className="border-t border-white/10 px-4 py-10 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 lg:pl-28">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 text-center sm:gap-4">
+          <p className="font-mono text-xs tracking-[0.12em] text-white/80 sm:tracking-[0.16em]">
+            {person.fullName}
+          </p>
+          <p className="font-mono text-[10px] tracking-[0.12em] text-muted-foreground uppercase sm:tracking-[0.16em]">
+            Vrindavan, Bharat
+          </p>
+          <p className="font-mono text-[10px] tracking-[0.12em] text-mbb-green uppercase sm:tracking-[0.16em]">
+            Practice before preaching.
+          </p>
+          <StorySocialLinks compact />
+          <a
+            href={productLinks.booking}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 font-mono text-xs tracking-[0.14em] text-mbb-green underline-offset-4 hover:underline uppercase"
+          >
+            Book a conversation →
+          </a>
+        </div>
+      </footer>
+    </div>
   );
 }

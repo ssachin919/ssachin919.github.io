@@ -36,7 +36,7 @@ export function ChapterRail({ activeId }: ChapterRailProps) {
   return (
     <>
       <nav
-        aria-label="Journey chapters"
+        aria-label="Page sections"
         className="pointer-events-none fixed top-1/2 left-4 z-40 hidden -translate-y-1/2 lg:block xl:left-8"
       >
         <ol className="pointer-events-auto flex flex-col gap-3">
@@ -104,7 +104,7 @@ export function ChapterRail({ activeId }: ChapterRailProps) {
         </div>
         <div className="flex items-center justify-between gap-3 bg-black/80 px-3 py-2.5 backdrop-blur-md pt-[max(0.625rem,env(safe-area-inset-top))]">
           <p className="min-w-0 truncate font-mono text-[11px] tracking-[0.12em] text-mbb-green uppercase">
-            Mission Bhavya Bharat
+            Swami Sachin Anand
           </p>
           <div className="flex shrink-0 items-center gap-2">
             <motion.p
@@ -141,7 +141,7 @@ export function ChapterRail({ activeId }: ChapterRailProps) {
               onClick={() => setMenuOpen(false)}
             />
             <motion.nav
-              aria-label="Journey chapters"
+              aria-label="Page sections"
               className="fixed inset-y-0 right-0 z-50 flex w-[min(100%,20rem)] flex-col border-l border-white/10 bg-[#0a0a0a] pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] lg:hidden"
               initial={reduce ? false : { x: "100%" }}
               animate={{ x: 0 }}

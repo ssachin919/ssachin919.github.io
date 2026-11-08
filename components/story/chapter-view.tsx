@@ -5,10 +5,8 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 import { ChapterFrame } from "@/components/story/chapter-frame";
-import { ChapterDiveTriggers } from "@/components/story/dive-side-panel";
 import {
   HeroAtmosphere,
-  ScrollCue,
   Stagger,
   StaggerItem,
 } from "@/components/story/motion";
@@ -32,8 +30,11 @@ export function ChapterView({ chapter, scrollProgress = 0 }: ChapterViewProps) {
   if (chapter.variant === "hero") {
     return <HeroChapter chapter={chapter} scrollProgress={scrollProgress} />;
   }
-  if (chapter.variant === "twin") {
-    return <TwinChapter chapter={chapter} />;
+  if (chapter.variant === "work") {
+    return <WorkChapter chapter={chapter} />;
+  }
+  if (chapter.variant === "faq") {
+    return <FaqChapter chapter={chapter} />;
   }
   if (chapter.variant === "close") {
     return <CloseChapter chapter={chapter} />;
@@ -90,96 +91,48 @@ function MapsLink({ chapter }: { chapter: StoryChapter }) {
   );
 }
 
-function BookCoverVisual({
-  book,
-  className,
+function PrimaryCta({
+  href,
+  label,
+  note,
 }: {
-  book: NonNullable<StoryChapter["book"]>;
-  className?: string;
+  href: string;
+  label: string;
+  note?: string;
 }) {
   const reduce = useReducedMotion();
-
-  if (book.coverSrc) {
-    return (
-      <motion.a
-        href={book.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={cn(
-          "relative mx-auto block aspect-[3/4] w-40 shrink-0 sm:w-48 md:mx-0 md:w-56 lg:w-64",
-          className
-        )}
-        aria-label={`${book.title} — ${book.hrefLabel}`}
-        animate={reduce ? undefined : { y: [0, -8, 0] }}
-        transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-        whileHover={reduce ? undefined : { y: -4, rotate: -1 }}
-      >
-        <div className="absolute -inset-4 rounded-lg bg-mbb-green/20 blur-2xl" />
-        <Image
-          src={book.coverSrc}
-          alt={`${book.title}: ${book.subtitle}`}
-          fill
-          priority
-          className="rounded-sm object-cover shadow-[0_24px_60px_rgba(0,0,0,0.55)] ring-1 ring-white/15"
-          sizes="(max-width: 640px) 160px, (max-width: 768px) 192px, 256px"
-        />
-      </motion.a>
-    );
-  }
+  const external = href.startsWith("http");
 
   return (
-    <motion.a
-      href={book.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "group relative mx-auto block w-[9.5rem] shrink-0 perspective-[900px] sm:w-44 md:mx-0 md:w-52 lg:w-60",
-        className
-      )}
-      aria-label={`${book.title} — ${book.hrefLabel}`}
-      animate={reduce ? undefined : { y: [0, -8, 0] }}
-      transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-      whileHover={reduce ? undefined : { y: -4 }}
-    >
-      <div className="absolute -inset-6 rounded-full bg-mbb-green/25 blur-3xl" />
-      <div
-        className={cn(
-          "relative aspect-[2/3] origin-left rounded-sm bg-[#0c120e] shadow-[0_28px_70px_rgba(0,0,0,0.65)] ring-1 ring-white/12",
-          "transition-transform duration-500 ease-out",
-          !reduce && "group-hover:[transform:rotateY(-12deg)_rotateZ(-1deg)]"
-        )}
-        style={{ transformStyle: "preserve-3d" }}
+    <div className="flex flex-col gap-2">
+      <motion.a
+        href={href}
+        {...(external
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+        className="inline-flex min-h-11 w-fit items-center justify-center gap-2 rounded-sm bg-mbb-green px-5 font-mono text-sm tracking-[0.14em] text-black uppercase"
+        whileHover={reduce ? undefined : { scale: 1.02 }}
+        whileTap={reduce ? undefined : { scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 400, damping: 22 }}
       >
-        {/* Spine edge */}
-        <div
-          aria-hidden
-          className="absolute inset-y-0 left-0 w-2.5 rounded-l-sm bg-gradient-to-b from-mbb-green via-mbb-green-muted to-[#1a3d22]"
-        />
-        <div
-          aria-hidden
-          className="absolute inset-y-3 left-2.5 w-px bg-white/10"
-        />
-        <div className="flex h-full flex-col justify-between py-6 pr-4 pl-5 sm:py-7 sm:pr-5 sm:pl-6">
-          <div>
-            <p className="font-mono text-[0.55rem] tracking-[0.22em] text-mbb-green uppercase sm:text-[0.65rem]">
-              Kindle edition
-            </p>
-            <p className="mt-4 font-heading text-xl leading-tight font-extrabold tracking-tight text-white sm:text-2xl md:text-[1.65rem]">
-              {book.title}
-            </p>
-            <p className="mt-3 text-[0.65rem] leading-snug text-white/55 sm:text-xs">
-              {book.subtitle}
-            </p>
-          </div>
-          <div>
-            <div className="mb-3 h-px w-10 bg-mbb-green/70" />
-            <p className="font-mono text-[0.6rem] tracking-[0.12em] text-white/70 sm:text-xs">
-              {person.fullName}
-            </p>
-          </div>
-        </div>
-      </div>
-    </motion.a>
+        {label}
+        <span aria-hidden>→</span>
+      </motion.a>
+      {note ? (
+        <p className="font-mono text-xs tracking-wide text-white/55">{note}</p>
+      ) : null}
+    </div>
+  );
+}
+
+function BodyParagraphs({ chapter }: { chapter: StoryChapter }) {
+  return (
+    <>
+      <p>{chapter.body}</p>
+      {chapter.paragraphs?.map((paragraph) => (
+        <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+      ))}
+    </>
   );
 }
 
@@ -191,7 +144,6 @@ function HeroChapter({
   scrollProgress: number;
 }) {
   const reduce = useReducedMotion();
-  const book = chapter.book;
   const avatarSrc =
     chapter.portraitSrc ?? "/pictures/sachin-avatar-circle.webp";
 
@@ -206,92 +158,66 @@ function HeroChapter({
       <div className="story-chapter-content relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 pb-20 pt-28 sm:gap-10 sm:px-6 md:flex-row md:items-center md:gap-14 md:px-10 lg:pl-28">
         <Stagger className="min-w-0 flex-1">
           <StaggerItem>
-            <p className="font-mono text-xs tracking-[0.2em] text-mbb-green uppercase sm:tracking-[0.28em]">
-              Mission
-            </p>
-          </StaggerItem>
-          <StaggerItem>
-            <h1 className="mt-3 font-heading text-[2.35rem] leading-[1.1] font-extrabold tracking-tight sm:mt-4 sm:text-4xl md:text-6xl lg:text-7xl">
-              <span className="text-white">Bhavya </span>
-              <span className="text-mbb-green">Bharat</span>
+            <h1 className="font-heading text-[2.2rem] leading-[1.1] font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
+              {chapter.title}
             </h1>
           </StaggerItem>
-          <StaggerItem>
-            <p className="mt-3 font-mono text-sm tracking-[0.08em] text-white/70 sm:text-base">
-              {person.fullName}
-            </p>
-          </StaggerItem>
-          {book ? (
+          {chapter.eyebrow ? (
             <StaggerItem>
-              <p className="mt-4 max-w-xl text-sm tracking-wide text-white/85 sm:text-base md:text-lg">
-                <span className="font-heading font-semibold text-white">
-                  {book.title}
-                </span>
-                <span className="text-white/40"> — </span>
-                <span className="text-white/75">{book.subtitle}</span>
+              <p className="mt-4 max-w-xl font-heading text-xl leading-snug font-semibold tracking-tight text-white sm:text-2xl md:text-3xl">
+                {chapter.eyebrow}
               </p>
             </StaggerItem>
-          ) : chapter.bodyExtra ? (
+          ) : null}
+          {chapter.bodyExtra ? (
             <StaggerItem>
-              <p className="mt-4 text-sm tracking-wide text-white/80 md:text-base">
+              <p className="mt-3 font-mono text-sm tracking-[0.08em] text-mbb-green sm:text-base">
                 {chapter.bodyExtra}
               </p>
             </StaggerItem>
           ) : null}
           <StaggerItem>
-            <p className="mt-5 max-w-xl text-base text-muted-foreground sm:mt-6 sm:text-lg md:text-xl">
-              {chapter.body}
-            </p>
+            <div className="mt-5 max-w-xl space-y-4 text-base text-muted-foreground sm:mt-6 sm:text-lg md:text-xl">
+              <p>{chapter.body}</p>
+              {chapter.paragraphs?.map((paragraph) => (
+                <p
+                  key={paragraph.slice(0, 48)}
+                  className="font-heading text-lg font-semibold tracking-tight text-white sm:text-xl md:text-2xl"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
           </StaggerItem>
           <StaggerItem>
-            <div className="mt-8 flex flex-col gap-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8 sm:gap-y-4">
-              {book ? (
-                <motion.a
-                  href={book.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center justify-center gap-2 rounded-sm bg-mbb-green px-5 font-mono text-sm tracking-[0.14em] text-black uppercase"
-                  whileHover={reduce ? undefined : { scale: 1.02 }}
-                  whileTap={reduce ? undefined : { scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 22 }}
-                >
-                  {book.hrefLabel}
-                  <span aria-hidden>→</span>
-                </motion.a>
-              ) : null}
-              {chapter.ctaHref ? (
-                <ScrollCue
+            <div className="mt-8 flex flex-col gap-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-end sm:gap-x-8 sm:gap-y-4">
+              {chapter.ctaHref && chapter.ctaLabel ? (
+                <PrimaryCta
                   href={chapter.ctaHref}
                   label={chapter.ctaLabel}
+                  note={chapter.ctaNote}
                 />
               ) : null}
               <StorySocialLinks />
             </div>
           </StaggerItem>
-          <StaggerItem>
-            <ChapterDiveTriggers chapterId={chapter.id} />
-          </StaggerItem>
         </Stagger>
 
-        {book ? (
-          <BookCoverVisual book={book} />
-        ) : (
-          <motion.div
-            className="relative mx-auto h-36 w-36 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
-            animate={reduce ? undefined : { y: [0, -8, 0] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <div className="absolute inset-0 rounded-full bg-mbb-green/20 blur-2xl" />
-            <Image
-              src={avatarSrc}
-              alt={person.fullName}
-              fill
-              priority
-              className="rounded-full object-cover"
-              sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 256px"
-            />
-          </motion.div>
-        )}
+        <motion.div
+          className="relative mx-auto h-36 w-36 shrink-0 sm:h-48 sm:w-48 md:mx-0 md:h-56 md:w-56 lg:h-64 lg:w-64"
+          animate={reduce ? undefined : { y: [0, -8, 0] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <div className="absolute inset-0 rounded-full bg-mbb-green/20 blur-2xl" />
+          <Image
+            src={avatarSrc}
+            alt={person.fullName}
+            fill
+            priority
+            className="rounded-full object-cover"
+            sizes="(max-width: 640px) 144px, (max-width: 768px) 192px, 256px"
+          />
+        </motion.div>
       </div>
     </section>
   );
@@ -314,10 +240,17 @@ function DefaultChapter({
         <SceneLayer chapter={chapter} scrollProgress={scrollProgress} />
       }
     >
-      <p>{chapter.body}</p>
-      {chapter.bodyExtra ? <p>{chapter.bodyExtra}</p> : null}
+      <BodyParagraphs chapter={chapter} />
       <MapsLink chapter={chapter} />
-      <ChapterDiveTriggers chapterId={chapter.id} />
+      {chapter.ctaHref && chapter.ctaLabel ? (
+        <div className="pt-4">
+          <PrimaryCta
+            href={chapter.ctaHref}
+            label={chapter.ctaLabel}
+            note={chapter.ctaNote}
+          />
+        </div>
+      ) : null}
     </ChapterFrame>
   );
 }
@@ -339,22 +272,19 @@ function PortraitChapter({
     >
       <SceneLayer chapter={chapter} scrollProgress={scrollProgress} />
       <div className="story-chapter-content relative z-10 mx-auto grid w-full max-w-5xl items-center gap-8 px-4 py-20 sm:gap-10 sm:px-6 md:grid-cols-[minmax(0,1fr)_220px] md:px-10 md:py-24 lg:pl-28">
-        <div className="min-w-0">
+        <div className="min-w-0 space-y-4">
           {chapter.eyebrow ? (
             <p className="font-mono text-xs tracking-[0.14em] text-mbb-green uppercase sm:tracking-[0.18em]">
               {chapter.eyebrow}
             </p>
           ) : null}
-          <h2 className="mt-3 font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
+          <h2 className="font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
             {chapter.title}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
-            {chapter.body}
-          </p>
-          <div className="mt-4">
-            <MapsLink chapter={chapter} />
+          <div className="space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+            <BodyParagraphs chapter={chapter} />
           </div>
-          <ChapterDiveTriggers chapterId={chapter.id} />
+          <MapsLink chapter={chapter} />
         </div>
         {chapter.portraitSrc ? (
           <motion.div
@@ -378,10 +308,10 @@ function PortraitChapter({
   );
 }
 
-function TwinChapter({ chapter }: { chapter: StoryChapter }) {
-  const twin = chapter.twin;
+function WorkChapter({ chapter }: { chapter: StoryChapter }) {
+  const work = chapter.work;
   const reduce = useReducedMotion();
-  if (!twin) return null;
+  if (!work?.length) return null;
 
   return (
     <section
@@ -396,58 +326,107 @@ function TwinChapter({ chapter }: { chapter: StoryChapter }) {
             {chapter.eyebrow}
           </p>
         ) : null}
-        <h2 className="mt-3 max-w-2xl font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
+        {chapter.title ? (
+          <h2 className="mt-3 max-w-2xl font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
+            {chapter.title}
+          </h2>
+        ) : null}
+        {chapter.body ? (
+          <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:mt-5 md:text-lg">
+            {chapter.body}
+          </p>
+        ) : null}
+
+        <div
+          className={cn(
+            "grid gap-10 md:grid-cols-3 md:gap-10",
+            chapter.title || chapter.body ? "mt-10 sm:mt-14" : "mt-2"
+          )}
+        >
+          {work.map((block) => {
+            const external = block.href.startsWith("http");
+            return (
+              <motion.div
+                key={block.name}
+                className="story-twin-panel space-y-3"
+                whileHover={
+                  reduce
+                    ? undefined
+                    : {
+                        y: -4,
+                        transition: {
+                          type: "spring",
+                          stiffness: 350,
+                          damping: 24,
+                        },
+                      }
+                }
+              >
+                <h3 className="font-heading text-xl font-semibold text-white sm:text-2xl">
+                  {block.name}
+                </h3>
+                <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                  {block.body}
+                </p>
+                <p className="pt-2">
+                  <motion.a
+                    href={block.href}
+                    {...(external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    className="inline-flex min-h-11 items-center gap-1 font-mono text-sm tracking-wide text-mbb-green underline-offset-4 hover:underline"
+                    whileHover={reduce ? undefined : { x: 4 }}
+                  >
+                    {block.hrefLabel}
+                    <span aria-hidden>→</span>
+                  </motion.a>
+                </p>
+              </motion.div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FaqChapter({ chapter }: { chapter: StoryChapter }) {
+  const faqs = chapter.faqs;
+  if (!faqs?.length) return null;
+
+  return (
+    <section
+      id={chapter.id}
+      data-chapter={chapter.id}
+      className="relative flex min-h-[100svh] scroll-mt-14 flex-col justify-center overflow-hidden border-b border-white/5 lg:scroll-mt-0"
+    >
+      <div className="story-chapter-content relative z-10 mx-auto w-full max-w-3xl px-4 py-20 sm:px-6 md:px-10 md:py-24 lg:max-w-4xl lg:pl-28">
+        <h2 className="font-heading text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl lg:text-5xl">
           {chapter.title}
         </h2>
-        <p className="mt-4 max-w-2xl text-base text-muted-foreground sm:mt-5 md:text-lg">
-          {chapter.body}
-        </p>
-
-        <div className="mt-10 grid gap-10 sm:mt-14 md:grid-cols-2 md:gap-16">
-          {[twin.left, twin.right].map((block) => (
-            <motion.div
-              key={block.name}
-              className="story-twin-panel space-y-3"
-              whileHover={
-                reduce
-                  ? undefined
-                  : { y: -4, transition: { type: "spring", stiffness: 350, damping: 24 } }
-              }
-            >
-              <h3 className="font-heading text-xl font-semibold text-white sm:text-2xl md:text-3xl">
-                {block.name}
-              </h3>
-              <p className="font-mono text-xs tracking-[0.14em] text-mbb-green uppercase">
-                {block.tagline}
-              </p>
-              <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
-                {block.body}
-              </p>
-              <p className="pt-2">
-                <motion.a
-                  href={block.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-1 font-mono text-sm tracking-wide text-mbb-green underline-offset-4 hover:underline"
-                  whileHover={reduce ? undefined : { x: 4 }}
-                >
-                  {block.hrefLabel}
-                  <span aria-hidden>→</span>
-                </motion.a>
-              </p>
-            </motion.div>
+        {chapter.body ? (
+          <p className="mt-4 text-base text-muted-foreground md:text-lg">
+            {chapter.body}
+          </p>
+        ) : null}
+        <dl className="mt-10 space-y-8">
+          {faqs.map((item) => (
+            <div key={item.question} className="space-y-2">
+              <dt className="font-heading text-lg font-semibold text-white sm:text-xl">
+                {item.question}
+              </dt>
+              <dd className="text-base leading-relaxed text-muted-foreground md:text-lg">
+                {item.answer}
+              </dd>
+            </div>
           ))}
-        </div>
-        <ChapterDiveTriggers chapterId={chapter.id} />
+        </dl>
       </div>
     </section>
   );
 }
 
 function CloseChapter({ chapter }: { chapter: StoryChapter }) {
-  const reduce = useReducedMotion();
-  const book = chapter.book;
-
   return (
     <section
       id={chapter.id}
@@ -467,22 +446,12 @@ function CloseChapter({ chapter }: { chapter: StoryChapter }) {
         <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 md:text-lg">
           {chapter.body}
         </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
-          {book ? (
-            <motion.a
-              href={book.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 font-mono text-sm tracking-wide text-mbb-green underline-offset-4 hover:underline"
-              whileHover={reduce ? undefined : { x: 4 }}
-            >
-              {book.title} on Amazon
-              <span aria-hidden>→</span>
-            </motion.a>
+        <div className="mt-8 flex flex-col gap-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-8">
+          {chapter.ctaHref && chapter.ctaLabel ? (
+            <PrimaryCta href={chapter.ctaHref} label={chapter.ctaLabel} />
           ) : null}
           <StorySocialLinks />
         </div>
-        <ChapterDiveTriggers chapterId={chapter.id} />
       </div>
     </section>
   );

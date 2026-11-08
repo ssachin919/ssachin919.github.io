@@ -20,9 +20,9 @@ const jetbrainsMono = JetBrains_Mono({
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: `Mission Bhavya Bharat | ${person.fullName}`,
+  title: `${person.fullName} | Mission Bhavya Bharat`,
   description:
-    "My Journey — the path to Akhand Vrindavan Vaas and Mission Bhavya Bharat. From IIT Kanpur to Vrindavan: Humantra, CoinsLive, and a life rooted in dharma.",
+    "Rooted in Vrindavan. Building for the world. IIT Kanpur graduate, founder, and sanyasi — spiritual practice, technology, and service through Humantra, CoinsLive, and Mission Bhavya Bharat.",
   icons: {
     icon: [
       { url: `${basePath}/favicon.ico`, sizes: "any" },

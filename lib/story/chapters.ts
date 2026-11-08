@@ -6,21 +6,16 @@ function withBase(path: string) {
 
 export type SceneKind = "india-glow" | "code-lattice" | "vrindavan-tree";
 
-export type TwinBlock = {
+export type WorkBlock = {
   name: string;
-  tagline: string;
   body: string;
   href: string;
   hrefLabel: string;
 };
 
-export type StoryBook = {
-  title: string;
-  subtitle: string;
-  href: string;
-  hrefLabel: string;
-  /** Optional cover image; falls back to a branded typographic cover */
-  coverSrc?: string;
+export type FaqItem = {
+  question: string;
+  answer: string;
 };
 
 export type StoryChapter = {
@@ -28,22 +23,26 @@ export type StoryChapter = {
   railLabel: string;
   eyebrow?: string;
   title: string;
+  /** Primary body paragraph */
   body: string;
-  /** Optional second paragraph for denser beats */
+  /** Additional paragraphs after body */
+  paragraphs?: string[];
+  /** Short line under title (hero credentials, CTA note, etc.) */
   bodyExtra?: string;
   mapsUrl?: string;
   mapsLabel?: string;
   scene?: SceneKind;
-  /** Lighter tree bloom for seva reuse */
   sceneVariant?: "full" | "light";
   pin?: boolean;
-  variant?: "hero" | "default" | "twin" | "portrait" | "close";
-  twin?: { left: TwinBlock; right: TwinBlock };
+  variant?: "hero" | "default" | "work" | "faq" | "portrait" | "close";
+  work?: WorkBlock[];
+  faqs?: FaqItem[];
   portraitSrc?: string;
-  coverSrc?: string;
-  book?: StoryBook;
+  /** Primary CTA */
   ctaLabel?: string;
   ctaHref?: string;
+  /** Secondary line under CTA (e.g. fee / format) */
+  ctaNote?: string;
 };
 
 export const VRINDAVAN_MAPS_URL =
@@ -67,148 +66,134 @@ export const socialLinks = [
 export const productLinks = {
   humantra: "https://humantra.yoga/",
   coinslive: "https://coinslive.in/",
-  book: "https://www.amazon.in/dp/B0HLWJR4QJ",
+  /** Private conversation booking via CoinsLive */
+  booking: "https://coinslive.in/",
+  mission: "#mission",
 } as const;
-
-export const storyBook: StoryBook = {
-  title: "My Journey",
-  subtitle:
-    "The Path to Akhand Vrindavan Vaas and Mission Bhavya Bharat",
-  href: productLinks.book,
-  hrefLabel: "Read on Amazon",
-  coverSrc: withBase("/pictures/my-journey-cover.webp"),
-};
 
 export const storyChapters: StoryChapter[] = [
   {
     id: "hero",
-    railLabel: "Journey",
+    railLabel: "Home",
     variant: "hero",
-    title: "Mission Bhavya Bharat",
-    body: "The story of how a broken faith became a vow in Vrindavan — and Mission Bhavya Bharat the work that followed.",
-    bodyExtra: "Technology · Spirituality · Nation Building",
+    title: "Swami Sachin Anand",
+    eyebrow: "Rooted in Vrindavan. Building for the world.",
+    bodyExtra: "IIT Kanpur graduate. Founder. Sanyasi.",
+    body: "My life brings together spiritual practice, technology, and service. From Vrindavan, I am working toward a question that connects all three:",
+    paragraphs: [
+      "How can we build a better world while becoming better human beings?",
+    ],
     scene: "india-glow",
     portraitSrc: withBase("/pictures/sachin-avatar-circle.webp"),
-    book: storyBook,
-    ctaLabel: "Walk the story",
-    ctaHref: "#iit",
+    ctaLabel: "Book a private conversation",
+    ctaHref: productLinks.booking,
+    ctaNote: "30 minutes · Online · ₹50,000",
   },
   {
-    id: "iit",
-    railLabel: "IITK",
-    eyebrow: "IIT Kanpur · Mechanical Engineering",
-    title: "JEE cleared. IIT Kanpur began.",
-    body: "The gate opened with one exam. Inside: systems thinking, discipline under pressure, and a mind trained to build what lasts.",
-  },
-  {
-    id: "research",
-    railLabel: "Research",
-    eyebrow: "Internships · Dual degree",
-    title: "Labs first. Then a longer path.",
-    body: "Core internships, including E-spin Nanotech, pulled toward research. Love for mathematics turned a B.Tech into a dual B.Tech + M.Tech.",
-  },
-  {
-    id: "corona",
-    railLabel: "Pivot",
-    eyebrow: "The pandemic",
-    title: "Then the path broke.",
-    body: "COVID forced the dual degree to end. The plan ended. The search for the next honest chapter began.",
-  },
-  {
-    id: "contata",
-    railLabel: "Contata",
-    eyebrow: "Contata Solutions · Full stack",
-    title: "Ship code. Learn people.",
-    body: "Full-stack work at Contata turned theory into product: speed, collaboration, and software that had to work for someone else.",
-    scene: "code-lattice",
-  },
-  {
-    id: "startups",
-    railLabel: "Startups",
-    eyebrow: "Serving society",
-    title: "Comfort was not the brief.",
-    body: "Startups felt like the only place left to stretch: building for society, not just a title on a card.",
-  },
-  {
-    id: "vrindavan",
-    railLabel: "Vrindavan",
-    eyebrow: "Akhand Vrindavan Vaas",
-    title: "A vow. A home. A way of working.",
-    body: "The spiritual path deepened into nishtha: Akhand Vrindavan Vaas. From there, the work continued remotely. Rooted, not retreated.",
-    variant: "portrait",
-    portraitSrc: withBase("/pictures/sachin-avatar-circle.webp"),
+    id: "vow",
+    railLabel: "Vow",
+    title: "One commitment shapes everything else.",
+    body: "I have taken a vow of Akhand Vrindavan Vaas, a commitment to remain in Vrindavan. This is where I practice, build products, and work with people online.",
+    paragraphs: [
+      "My engineering education at IIT Kanpur taught me to examine how things work. Spiritual practice keeps bringing me back to why we do them.",
+      "Both shape the questions I ask and the work I choose.",
+    ],
     scene: "vrindavan-tree",
     sceneVariant: "full",
-    pin: true,
     mapsUrl: VRINDAVAN_MAPS_URL,
     mapsLabel: "Find Vrindavan on Google Maps",
   },
   {
-    id: "talentsavvy",
-    railLabel: "Remote",
-    eyebrow: "TalentSavvy · From Vrindavan",
-    title: "Deep tech. Sacred ground.",
-    body: "TalentSavvy shipped from Vrindavan: proof that serious engineering and spiritual rootedness can live in the same day.",
+    id: "practice",
+    railLabel: "Practice",
+    title: "Practice before preaching.",
+    body: "A principle means something when it changes how we live.",
+    paragraphs: [
+      "For me, that means bringing the same attention to spiritual practice, a product decision, a difficult conversation, and an act of service.",
+      "My work is an ongoing attempt to put this into practice.",
+    ],
   },
   {
-    id: "webyalaya",
-    railLabel: "Webyalaya",
-    eyebrow: "Founded · Incubated by IIM Lucknow",
-    title: "Founded. Funded. Exited.",
-    body: "Webyalaya grew under IIM Lucknow’s incubation. When the CTO role required travel that conflicted with Vrindavan as first priority, stepping down was the honest move — and cleared the ground for what came next.",
-  },
-  {
-    id: "twin",
-    railLabel: "Now",
-    eyebrow: "Two products · One mission",
-    title: "Clarity within. Opportunity without.",
-    body: "Two companies. Two hard problems: inner unrest, and a generation locked out of the tech conversation.",
-    variant: "twin",
+    id: "work",
+    railLabel: "Work",
+    variant: "work",
+    title: "",
+    body: "",
     pin: true,
-    twin: {
-      left: {
+    work: [
+      {
         name: "Humantra",
-        tagline: "Practice before preaching",
-        body: "AI-powered spiritual guidance rooted in Sanatan Dharma. For the quiet question beneath a successful life: why am I doing any of this? Clarity, purpose, and a life aligned with dharma. Lived first, then shared.",
+        body: "Bringing spiritual practice into everyday life through technology, guidance, and tools such as Breaths by Humantra.",
         href: productLinks.humantra,
-        hrefLabel: "Visit humantra.yoga",
+        hrefLabel: "Explore Humantra",
       },
-      right: {
+      {
         name: "CoinsLive",
-        tagline: "Stop nodding. Start knowing.",
-        body: "AI, agents, and web3 explained without hype or fear. Briefings, tests, and live sessions so founders, freshers, and curious professionals can finally understand enough to act.",
+        body: "Helping students and early professionals find career clarity and turn learning into action through counselling, practical learning, and conversations with mentors.",
         href: productLinks.coinslive,
-        hrefLabel: "Visit coinslive.in",
+        hrefLabel: "Explore CoinsLive",
       },
-    },
+      {
+        name: "Mission Bhavya Bharat",
+        body: "The larger vision behind my work: a conscious, innovative, self-reliant Bharat, where people have meaningful opportunities and greater clarity in life.",
+        href: productLinks.mission,
+        hrefLabel: "Explore Mission Bhavya Bharat",
+      },
+    ],
   },
   {
-    id: "seva",
-    railLabel: "Seva",
-    eyebrow: "Social initiatives",
-    title: "Service that stays close to the soil.",
-    body: "Ventures are not the whole work. Vriksharopan (tree plantation in Vrindavan) and other seva keep the mission tied to place, not only product.",
-    scene: "vrindavan-tree",
-    sceneVariant: "light",
-    mapsUrl: VRINDAVAN_MAPS_URL,
-    mapsLabel: "Find Vrindavan on Google Maps",
+    id: "mission",
+    railLabel: "Mission",
+    title: "What question brings you here?",
+    body: "Perhaps you are building something and questioning its direction.",
+    paragraphs: [
+      "Perhaps your work is growing, while your sense of purpose feels less clear.",
+      "Perhaps you see a possibility where technology, learning, and service meet, and want to think it through.",
+      "Bring one question that deserves your full attention.",
+      "In our conversation, we can examine your assumptions, consider the choices before you, and explore a practical next step.",
+      "I bring my experience in building products and a perspective shaped by spiritual practice. The conversation begins with your context.",
+    ],
+    ctaLabel: "Book a 30-minute conversation · ₹50,000",
+    ctaHref: productLinks.booking,
+    ctaNote: "Sign in on CoinsLive, pay, and book your online meeting.",
   },
   {
-    id: "vision",
-    railLabel: "Vision",
-    eyebrow: "What we are building toward",
-    title: "Gaushala. Gurukul. Sustainable industry.",
-    body: "Reviving gaushala and gurukul as living systems: holistic education, dignified livelihood, and industry that does not hollow out the land.",
+    id: "prepare",
+    railLabel: "Prepare",
+    variant: "faq",
+    title: "Before we meet",
+    body: "",
+    faqs: [
+      {
+        question: "What can we discuss?",
+        answer:
+          "Product and venture direction, practical uses of technology, career decisions, or bringing your work closer to your values. Choose one central question so we can give it proper attention.",
+      },
+      {
+        question: "How should I prepare?",
+        answer:
+          "Come with a brief account of your situation, what you have already considered, and the decision or question you want to explore.",
+      },
+      {
+        question: "Where does the meeting take place?",
+        answer:
+          "Online. I conduct all meetings remotely from Vrindavan.",
+      },
+      {
+        question: "What is the fee?",
+        answer: "₹50,000 for a 30-minute private conversation.",
+      },
+    ],
   },
   {
     id: "close",
-    railLabel: "Join",
-    eyebrow: "Mission Bhavya Bharat",
-    title: "Everyone deserves a glorious life.",
-    body: "If this arc resonates: read the book, build with us, learn with us, or simply say namaste. Anyone can connect on any of the social channels.",
+    railLabel: "Connect",
     variant: "close",
-    pin: true,
-    book: storyBook,
+    title: "Swami Sachin Anand",
+    eyebrow: "Vrindavan, Bharat",
+    body: "Practice before preaching.",
+    ctaLabel: "Book a conversation",
+    ctaHref: productLinks.booking,
   },
 ];
 
