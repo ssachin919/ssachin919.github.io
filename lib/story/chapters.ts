@@ -67,7 +67,7 @@ export const productLinks = {
   humantra: "https://humantra.yoga/",
   coinslive: "https://coinslive.in/",
   /** Private conversation booking via CoinsLive */
-  booking: "https://coinslive.in/",
+  booking: "https://www.coinslive.in/u/sachin/",
   mission: "#mission",
 } as const;
 

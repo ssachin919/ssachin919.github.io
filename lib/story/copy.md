@@ -10,7 +10,7 @@ Source: Swami_Sachin_Anand_Website_Copy.pdf
 
 - **Page title:** Swami Sachin Anand | Mission Bhavya Bharat
 - **Description:** Rooted in Vrindavan. Building for the world. IIT Kanpur graduate, founder, and sanyasi — spiritual practice, technology, and service through Humantra, CoinsLive, and Mission Bhavya Bharat.
-- **Booking:** https://coinslive.in/
+- **Booking:** https://www.coinslive.in/u/sachin/
 - **Humantra:** https://humantra.yoga/
 - **CoinsLive:** https://coinslive.in/
 - **LinkedIn:** https://linkedin.com/in/sachin-anand-mbb
@@ -29,7 +29,7 @@ Source: Swami_Sachin_Anand_Website_Copy.pdf
 **Credentials:** IIT Kanpur graduate. Founder. Sanyasi.  
 **Body:** My life brings together spiritual practice, technology, and service. From Vrindavan, I am working toward a question that connects all three:  
 **Question:** How can we build a better world while becoming better human beings?  
-**CTA:** Book a private conversation → https://coinslive.in/  
+**CTA:** Book a private conversation → https://www.coinslive.in/u/sachin/  
 **Note:** 30 minutes · Online · ₹50,000
 
 ---
@@ -78,7 +78,7 @@ The larger vision behind my work: a conscious, innovative, self-reliant Bharat, 
 - In our conversation, we can examine your assumptions, consider the choices before you, and explore a practical next step.
 - I bring my experience in building products and a perspective shaped by spiritual practice. The conversation begins with your context.
 
-**CTA:** Book a 30-minute conversation · ₹50,000 → https://coinslive.in/  
+**CTA:** Book a 30-minute conversation · ₹50,000 → https://www.coinslive.in/u/sachin/  
 **Note:** Sign in on CoinsLive, pay, and book your online meeting.
 
 ---
@@ -99,5 +99,5 @@ The larger vision behind my work: a conscious, innovative, self-reliant Bharat, 
 **Title:** Swami Sachin Anand  
 **Eyebrow:** Vrindavan, Bharat  
 **Body:** Practice before preaching.  
-**CTA:** Book a conversation → https://coinslive.in/  
+**CTA:** Book a conversation → https://www.coinslive.in/u/sachin/  
 **Social:** LinkedIn · Instagram · YouTube
